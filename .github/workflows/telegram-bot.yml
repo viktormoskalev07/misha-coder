@@ -1,0 +1,37 @@
+name: Telegram Bot Handler
+
+on:
+  schedule:
+    - cron: '*/2 * * * *'  # Run every 2 minutes
+  workflow_dispatch:
+
+jobs:
+  handle-telegram:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install axios
+
+      - name: Check for messages
+        env:
+          BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node .github/workflows/telegram-handler.js
+
+      - name: Commit changes
+        run: |
+          git config user.name "Telegram Bot"
+          git config user.email "bot@misha-coder.dev"
+          git add -A
+          git diff --quiet && git diff --staged --quiet || git commit -m "Bot: Process messages and save results"
+          git push origin claude/telegram-bot-message-read-6hk5e5
+        continue-on-error: true

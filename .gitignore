@@ -1,0 +1,10 @@
+node_modules/
+.env
+.env.local
+.DS_Store
+bot-messages.json
+bot-results.json
+.github/bot-state.json
+*.pyc
+__pycache__/
+.pytest_cache/
