@@ -2,7 +2,7 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 
-const BOT_TOKEN = process.env.BOT_TOKEN;
+const BOT_TOKEN = process.env.BOT_TOKEN || "8598513999:AAFhhzutC-6CNon6olbozTsPQgedNYneKp0";
 const TELEGRAM_API = `https://api.telegram.org/bot${BOT_TOKEN}`;
 const STATE_FILE = path.join(process.cwd(), '.github/bot-state.json');
 const MESSAGES_FILE = path.join(process.cwd(), 'bot-messages.json');

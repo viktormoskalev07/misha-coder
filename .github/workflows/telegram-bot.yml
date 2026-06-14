@@ -2,7 +2,7 @@ name: Telegram Bot Handler
 
 on:
   schedule:
-    - cron: '*/2 * * * *'  # Run every 2 minutes
+    - cron: '*/3 * * * *'  # Run every 3 minutes
   workflow_dispatch:
 
 jobs:
@@ -12,26 +12,42 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          ref: claude/telegram-bot-message-read-6hk5e5
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: npm install axios
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
-      - name: Check for messages
-        env:
-          BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      - name: Install dependencies
+        run: |
+          npm install axios
+          pip install requests
+
+      - name: Process Telegram Messages
         run: node .github/workflows/telegram-handler.js
+        env:
+          BOT_TOKEN: "8598513999:AAFhhzutC-6CNon6olbozTsPQgedNYneKp0"
+
+      - name: Process Commands
+        run: python3 process-commands.py
+        continue-on-error: true
+
+      - name: Send Results
+        run: node .github/workflows/send-results.js
+        env:
+          BOT_TOKEN: "8598513999:AAFhhzutC-6CNon6olbozTsPQgedNYneKp0"
+        continue-on-error: true
 
       - name: Commit changes
         run: |
-          git config user.name "Telegram Bot"
-          git config user.email "bot@misha-coder.dev"
+          git config user.name "Bot"
+          git config user.email "bot@example.com"
           git add -A
-          git diff --quiet && git diff --staged --quiet || git commit -m "Bot: Process messages and save results"
-          git push origin claude/telegram-bot-message-read-6hk5e5
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Bot: Process at $(date -u +'%Y-%m-%d %H:%M:%S')" && git push origin claude/telegram-bot-message-read-6hk5e5)
         continue-on-error: true
