@@ -4,7 +4,8 @@ node_modules/
 .DS_Store
 bot-messages.json
 bot-results.json
-.github/bot-state.json
+# NOTE: .github/bot-state.json is intentionally tracked so the read offset
+# (lastUpdateId) survives across stateless GitHub Actions runs.
 *.pyc
 __pycache__/
 .pytest_cache/

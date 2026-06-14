@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: claude/telegram-bot-message-read-6hk5e5
+          ref: claude/telegram-bot-setup-r92lig
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -49,5 +49,5 @@ jobs:
           git config user.name "Bot"
           git config user.email "bot@example.com"
           git add -A
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Bot: Process at $(date -u +'%Y-%m-%d %H:%M:%S')" && git push origin claude/telegram-bot-message-read-6hk5e5)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Bot: Process at $(date -u +'%Y-%m-%d %H:%M:%S')" && git push origin claude/telegram-bot-setup-r92lig)
         continue-on-error: true
