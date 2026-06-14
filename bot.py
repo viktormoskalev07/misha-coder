@@ -115,13 +115,20 @@ def get_updates():
 
     try:
         response = requests.get(url, params=params, timeout=35)
+        if response.status_code != 200:
+            print(f"API Error {response.status_code}: {response.text[:100]}")
+            return []
+
+        if not response.text:
+            return []
+
         data = response.json()
 
         if data.get("ok"):
             return data.get("result", [])
         return []
     except Exception as e:
-        print(f"Error getting updates: {e}")
+        print(f"Error getting updates: {type(e).__name__}")
         return []
 
 def handle_message(message):
