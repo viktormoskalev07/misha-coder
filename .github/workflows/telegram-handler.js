@@ -145,7 +145,7 @@ async function processUpdates() {
     const text = message.text || '';
     const userId = message.from.username || `user_${message.from.id}`;
 
-    log(`Message from @${userId}: ${text.substring(0, 100)}`);
+    log(`Message from @${userId} (chat ${chatId}): ${text}`);
 
     messages.push({
       id: update.update_id,
