@@ -1,0 +1,89 @@
+name: Test Action On Push
+
+on:
+  push:
+    branches:
+      - claude/telegram-bot-message-read-6hk5e5
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: claude/telegram-bot-message-read-6hk5e5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install axios
+        run: npm install axios
+
+      - name: Test Telegram API Request
+        run: |
+          cat > test-api.js << 'EOF'
+          const axios = require('axios');
+          const fs = require('fs');
+
+          const BOT_TOKEN = "8598513999:AAFhhzutC-6CNon6olbozTsPQgedNYneKp0";
+          const API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`;
+
+          console.log("=== GITHUB ACTION TEST ===");
+          console.log(`Time: ${new Date().toISOString()}`);
+          console.log(`URL: ${API_URL}`);
+          console.log("");
+
+          axios.get(API_URL, { params: { offset: 1, timeout: 5 } })
+            .then(response => {
+              console.log("✅ SUCCESS!");
+              console.log(`Status: ${response.status}`);
+              console.log(`Updates: ${response.data.result ? response.data.result.length : 0}`);
+
+              fs.writeFileSync('action-result.json', JSON.stringify({
+                success: true,
+                status: response.status,
+                message: "Connected to Telegram API successfully",
+                updates: response.data.result ? response.data.result.length : 0,
+                timestamp: new Date().toISOString()
+              }, null, 2));
+            })
+            .catch(error => {
+              console.log("❌ ERROR!");
+              console.log(`Status: ${error.response?.status || 'N/A'}`);
+              console.log(`Message: ${error.message}`);
+              if (error.response?.data) {
+                console.log(`Response: ${JSON.stringify(error.response.data)}`);
+              }
+
+              fs.writeFileSync('action-result.json', JSON.stringify({
+                success: false,
+                status: error.response?.status || 'no response',
+                statusText: error.response?.statusText || 'unknown',
+                message: error.message,
+                response: error.response?.data || null,
+                timestamp: new Date().toISOString()
+              }, null, 2));
+            });
+          EOF
+
+          node test-api.js
+
+      - name: Show Result
+        run: |
+          echo "=== ACTION RESULT ==="
+          if [ -f action-result.json ]; then
+            cat action-result.json
+          else
+            echo "No result file"
+          fi
+
+      - name: Commit Result
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add action-result.json test-api.js
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Action test result at $(date)" && git push origin claude/telegram-bot-message-read-6hk5e5)
+        continue-on-error: true
