@@ -12,7 +12,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #1a73e8;
             font-family: 'Arial', sans-serif;
         }
         .container {
@@ -20,13 +20,24 @@
             background: white;
             padding: 40px 60px;
             border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
         h1 {
             color: #333;
             font-size: 48px;
-            margin: 0;
+            margin: 0 0 20px 0;
             animation: fadeIn 1s ease-in;
+        }
+        #ukraine-time {
+            font-size: 28px;
+            color: #1a73e8;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        #ukraine-date {
+            font-size: 18px;
+            color: #555;
+            margin-top: 5px;
         }
         @keyframes fadeIn {
             from {
@@ -43,6 +54,30 @@
 <body>
     <div class="container">
         <h1>Привет Миша 👋</h1>
+        <div id="ukraine-time">--:--:--</div>
+        <div id="ukraine-date"></div>
     </div>
+    <script>
+        function updateUkraineTime() {
+            const now = new Date();
+            // Ukraine is UTC+3 (EET/EEST - Europe/Kyiv)
+            const ukraineOffset = 3 * 60; // minutes
+            const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+            const ukraineTime = new Date(utc + ukraineOffset * 60000);
+
+            const h = String(ukraineTime.getHours()).padStart(2, '0');
+            const m = String(ukraineTime.getMinutes()).padStart(2, '0');
+            const s = String(ukraineTime.getSeconds()).padStart(2, '0');
+
+            const days = ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+            const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+
+            document.getElementById('ukraine-time').textContent = `${h}:${m}:${s}`;
+            document.getElementById('ukraine-date').textContent =
+                `${days[ukraineTime.getDay()]}, ${ukraineTime.getDate()} ${months[ukraineTime.getMonth()]} ${ukraineTime.getFullYear()} — Украина (UTC+3)`;
+        }
+        updateUkraineTime();
+        setInterval(updateUkraineTime, 1000);
+    </script>
 </body>
 </html>
