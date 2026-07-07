@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Розыгрыш покупок — 11 призов в 4 категориях: кресла, 3D-принтеры, акустика 2.1 и телевизоры.">
+<title>🎰 РОЗЫГРЫШ — Топ Покупок</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+
+  :root {
+    --gold: #FFD700;
+    --red: #E53935;
+    --dark: #0D0D0D;
+    --card: #1A1A2E;
+    --accent: #16213E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* CONFETTI */
+  .confetti-container {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 1000; display: none;
+  }
+  .confetti-piece {
+    position: absolute; width: 10px; height: 10px;
+    animation: confetti-fall 3s ease-in forwards;
+  }
+  @keyframes confetti-fall {
+    0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* HEADER */
+  header {
+    text-align: center;
+    padding: 60px 20px 40px;
+    background: linear-gradient(135deg, #1a0533 0%, #0d0d0d 50%, #1a1500 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255,215,0,0.08) 0%, transparent 70%);
+  }
+  .header-icon { font-size: 72px; display: block; margin-bottom: 16px; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+  h1 {
+    font-size: clamp(32px, 6vw, 64px);
+    font-weight: 900;
+    background: linear-gradient(90deg, #FFD700, #FF6B6B, #FFD700);
+    background-size: 200% auto;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+    letter-spacing: -1px;
+  }
+  @keyframes shine { to { background-position: 200% center; } }
+  .subtitle {
+    margin-top: 12px; font-size: 18px; color: rgba(255,255,255,0.6);
+    font-weight: 400;
+  }
+
+  /* PRIZE POOL */
+  .prize-pool {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+    padding: 10px 22px;
+    background: rgba(255,215,0,0.08);
+    border: 1px solid rgba(255,215,0,0.25);
+    border-radius: 40px;
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    position: relative;
+  }
+  .prize-pool strong { color: var(--gold); font-weight: 900; }
+
+  /* SPIN ACCORDION */
+  .spin-accordion {
+    background: var(--accent);
+    border-top: 1px solid rgba(255,215,0,0.2);
+    border-bottom: 1px solid rgba(255,215,0,0.2);
+  }
+  .spin-accordion > summary {
+    padding: 22px 20px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    list-style: none;
+    user-select: none;
+    letter-spacing: 0.5px;
+    transition: opacity 0.2s;
+  }
+  .spin-accordion > summary:hover { opacity: 0.8; }
+  .spin-accordion > summary::-webkit-details-marker { display: none; }
+  .spin-accordion > summary::after { content: ' ▾'; font-size: 16px; }
+  .spin-accordion[open] > summary::after { content: ' ▴'; }
+
+  /* SPIN SECTION */
+  .spin-section {
+    text-align: center;
+    padding: 20px 20px 40px;
+  }
+  #winner-display {
+    font-size: clamp(20px, 4vw, 36px);
+    font-weight: 900;
+    color: var(--gold);
+    min-height: 52px;
+    margin-bottom: 24px;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+  }
+  .spin-btn {
+    background: linear-gradient(135deg, #FFD700, #FF8C00);
+    color: #000;
+    border: none;
+    padding: 18px 48px;
+    font-size: 20px;
+    font-weight: 900;
+    border-radius: 60px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 0 30px rgba(255,215,0,0.4);
+  }
+  .spin-btn:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(255,215,0,0.6); }
+  .spin-btn:active { transform: scale(0.97); }
+  .spin-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  /* CATEGORIES */
+  .categories { padding: 60px 20px; max-width: 1400px; margin: 0 auto; }
+  .category-title {
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 900;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+  }
+  .category-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255,215,0,0.4), transparent);
+    margin-left: 16px;
+  }
+
+  /* GRID */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin-bottom: 64px; }
+
+  /* CARD */
+  .card {
+    background: var(--card);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.07);
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    border-color: rgba(255,215,0,0.3);
+  }
+  .card.winner-glow {
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 60px rgba(255,215,0,0.6) !important;
+    animation: winner-pulse 0.5s ease-in-out 6;
+  }
+  @keyframes winner-pulse {
+    0%,100% { box-shadow: 0 0 40px rgba(255,215,0,0.4); }
+    50% { box-shadow: 0 0 80px rgba(255,215,0,0.9); }
+  }
+
+  /* TICKET NUMBER */
+  .ticket-number {
+    position: absolute; top: 14px; left: 14px;
+    background: linear-gradient(135deg, #FFD700, #FF8C00);
+    color: #000;
+    font-weight: 900;
+    font-size: 15px;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  }
+
+  /* PRODUCT IMAGE */
+  .img-wrap {
+    position: relative;
+    width: 100%; height: 200px;
+    background: linear-gradient(135deg, #0f0f1e 0%, #1a1a3e 100%);
+  }
+  /* shimmer loader shown until the image loads */
+  .img-wrap::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(100deg, transparent 20%, rgba(255,255,255,0.06) 50%, transparent 80%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+  }
+  .img-wrap.loaded::before, .img-wrap.failed::before { display: none; }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+  .product-img {
+    position: relative;
+    width: 100%; height: 200px;
+    object-fit: contain;
+    padding: 16px;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .img-wrap.loaded .product-img { opacity: 1; }
+  .product-img-placeholder {
+    width: 100%; height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 72px;
+    background: linear-gradient(135deg, #0f0f1e 0%, #1a1a3e 100%);
+  }
+
+  /* CARD BODY */
+  .card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+  .card-category-badge {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .badge-chair { background: rgba(66,133,244,0.2); color: #64B5F6; border: 1px solid rgba(66,133,244,0.3); }
+  .badge-printer { background: rgba(234,67,53,0.2); color: #EF9A9A; border: 1px solid rgba(234,67,53,0.3); }
+  .badge-speaker { background: rgba(15,157,88,0.2); color: #81C784; border: 1px solid rgba(15,157,88,0.3); }
+  .badge-tv { background: rgba(244,160,0,0.2); color: #FFD54F; border: 1px solid rgba(244,160,0,0.3); }
+
+  .card-name { font-size: 18px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; color: #fff; }
+  .card-desc { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 14px; line-height: 1.5; }
+  .card-price {
+    font-size: 22px; font-weight: 900;
+    color: var(--gold);
+    margin-bottom: 16px;
+    margin-top: auto;
+  }
+  .card-link {
+    display: block;
+    text-align: center;
+    padding: 12px 20px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .card-link:hover {
+    background: rgba(255,215,0,0.12);
+    border-color: rgba(255,215,0,0.4);
+    color: var(--gold);
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: rgba(255,255,255,0.3);
+    font-size: 13px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    line-height: 1.7;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #0d0d0d; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.3); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="confetti-container" id="confetti"></div>
+
+<header>
+  <span class="header-icon">🎰</span>
+  <h1>РОЗЫГРЫШ ПОКУПОК</h1>
+  <p class="subtitle">11 призов · 4 категории · Нажми — выбери победителя</p>
+  <div class="prize-pool">🎁 Призовой фонд: <strong id="pool-total">~180 000 грн</strong></div>
+</header>
+
+<!-- ТОВАРЫ -->
+<div class="categories">
+
+  <!-- КРЕСЛА -->
+  <div class="category-title">🪑 Кресла <span style="font-size:16px;color:rgba(255,255,255,0.4);font-weight:400;">до 25 000 грн</span></div>
+  <div class="grid">
+
+    <div class="card" data-num="1" data-price="20000" onclick="window.open('https://rozetka.com.ua/293399073/p293399073/','_blank')">
+      <div class="ticket-number">1</div>
+      <div class="img-wrap">
+        <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/293399073.jpg" alt="Ergohuman Plus Legrest" loading="lazy">
+        <div class="product-img-placeholder" style="display:none">🪑</div>
+      </div>
+      <div class="card-body">
+        <span class="card-category-badge badge-chair">Кресло</span>
+        <div class="card-name">Ergohuman Plus Legrest</div>
+        <div class="card-desc">Адаптивный поясничный валик + подставка для ног. Рост до 195 см, нагрузка 130 кг. Лучший для спины при гиперлордозе.</div>
+        <div class="card-price">~20 000 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/293399073/p293399073/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+      </div>
+    </div>
+
+    <div class="card" data-num="2" data-price="17300" onclick="window.open('https://rozetka.com.ua/ua/rondi-1410199003/p508667369/','_blank')">
+      <div class="ticket-number">2</div>
+      <div class="img-wrap">
+        <img class="product-img" src="https://content2.rozetka.com.ua/goods/images/big/508667369.jpg" alt="Rondi Titanium Multibuttons" loading="lazy">
+        <div class="product-img-placeholder" style="display:none">🪑</div>
+      </div>
+      <div class="card-body">
+        <span class="card-category-badge badge-chair">Кресло</span>
+        <div class="card-name">Rondi Titanium Multibuttons</div>
+        <div class="card-desc">Рост до 205 см, нагрузка 150 кг. Активная поясничная поддержка, 3D подголовник, слайдер. Офисный стиль.</div>
+        <div class="card-price">~17 300 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/rondi-1410199003/p508667369/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+      </div>
+    </div>
+
+    <div class="card" data-num="3" data-price="17099" onclick="window.open('https://rozetka.com.ua/ua/sihoo-doro-c300l-a3-101/p538166224/','_blank')">
+      <div class="ticket-number">3</div>
+      <div class="img-wrap">
+        <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/538166224.jpg" alt="Sihoo DORO C300L" loading="lazy">
+        <div class="product-img-placeholder" style="display:none">🪑</div>
+      </div>
+      <div class="card-body">
+        <span class="card-category-badge badge-chair">Кресло</span>
+        <div class="card-name">Sihoo DORO C300L</div>
+        <div class="card-desc">Двойная динамическая поясничная поддержка (высота + глубина), 6D подлокотники, сетка, офисный стиль.</div>
+        <div class="card-price">от 17 099 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/sihoo-doro-c300l-a3-101/p538166224/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 3D ПРИНТЕРЫ -->
+  <div class="category-title">🖨️ 3D Принтеры <span style="font-size:16px;color:rgba(255,255,255,0.4);font-weight:400;">до $300</span></div>
+  <div class="grid">
+
+    <div class="card" data-num="4" data-price="18800" onclick="window.open('https://rozetka.com.ua/ua/527289799/p527289799/','_blank')">
+      <div class="ticket-number">4</div>
+      <div class="img-wrap">
+        <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/527289799.jpg" alt="Elegoo Centauri Carbon" loading="lazy" style="background:linear-gradient(135deg,#1a0a00,#3d1a00)">
+        <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#1a0a00,#3d1a00)">🖨️</div>
+      </div>
+      <div class="card-body">
+        <span class="card-category-badge badge-printer">3D Принтер</span>
+        <div class="card-name">Elegoo Centauri Carbon</div>
+        <div class="card-desc">Полностью закрытый, CoreXY, 500 мм/с, встроенная камера, автокалибровка. Лучший закрытый в бюджете.</div>
+        <div class="card-price">от 18 800 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/527289799/p527289799/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+      </div>
+    </div>
+
+    <div class="card" data-num="5" data-price="20599" onclick="window.open('https://rozetka.com.ua/ua/creality-cr-k1c/p435637793/','_blank')">
+      <div class="ticket-number">5</div>
+      <div class="img-wrap">
+        <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/435637793.jpg" alt="Creality K1C" loading="lazy" style="background:linear-gradient(135deg,#1a0a0a,#3d0a0a)">
+        <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#1a0a0a,#3d0a0a)">🖨️</div>
+      </div>
+      <div class="card-body">
+        <span class="card-category-badge badge-printer">3D Принтер</span>
+        <div class="card-name">Creality K1C</div>
+        <div class="card-desc">Закрытый, CoreXY, 600 мм/с, поддержка карбон-филаментов и инженерных материалов, автоуровень.</div>
+        <div class="card-price">от 20 599 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/creality-cr-k1c/p435637793/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+      </div>
+    </div>
+
+    <div class="card" data-num="6" data-price="12000" onclick="window.open('https://rozetka.com.ua/ua/bambu-lab-lab-a1-mini/p437133701/','_blank')">
+      <div class="ticket-number">6</div>
+      <div class="img-wrap">
+        <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/437133701.jpg" alt="Bambu Lab A1 Mini" loading="lazy" style="background:linear-gradient(135deg,#000d1a,#001a3d)">
+        <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#000d1a,#001a3d)">🖨️</div>
+      </div>
+      <div class="card-body">
+        <span class="card-category-badge badge-printer">3D Принтер</span>
+        <div class="card-name">Bambu Lab A1 Mini</div>
+        <div class="card-desc">Лучшее качество печати в бюджете. AMS Lite на 4 цвета включён. Открытый принтер CoreXY с автокалибровкой и AI-детектором дефектов.</div>
+        <div class="card-price">от 12 000 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/bambu-lab-lab-a1-mini/p437133701/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- АКУСТИКА -->
+  <div class="category-title">🔊 Акустика 2.1 <span style="font-size:16px;color:rgba(255,255,255,0.4);font-weight:400;">для стола · с сабвуфером</span></div>
+  <div class="grid">
+
+    <div class="card" data-num="7" data-price="14040" onclick="window.open('https://rozetka.com.ua/edifier_s351db/p127596711/','_blank')">
+      <div class="ticket-number">7</div>
+      <div class="img-wrap">
+        <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/127596711.jpg" alt="Edifier S351DB" loading="lazy">
+        <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#0a1a0a,#1a2a0a)">🔊</div>
+      </div>
+      <div class="card-body">
+        <span class="card-category-badge badge-speaker">Акустика 2.1</span>
+        <div class="card-name">Edifier S351DB</div>
+        <div class="card-desc">150Вт 2.1, 8" сабвуфер, Bluetooth aptX, оптика + коаксиал. Деревянный корпус, титановые твиттеры. Лучший выбор для клубного баса на столе.</div>
+        <div class="card-price">от 14 040 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/edifier_s351db/p127596711/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+      </div>
+    </div>
+
+    <div class="card" data-num="8" data-price="22999" onclick="window.open('https://rozetka.com.ua/ua/edifier_s360db_brown/p29001465/','_blank')">
+      <div class="ticket-number">8</div>
+      <div class="img-wrap">
+        <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/29001465.jpg" alt="Edifier S360DB" loading="lazy">
+        <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#0a0a1a,#1a1a0a)">🔊</div>
+      </div>
+      <div class="card-body">
+        <span class="card-category-badge badge-speaker">Акустика 2.1</span>
+        <div class="card-name">Edifier S360DB</div>
+        <div class="card-desc">150Вт 2.1, беспроводной сабвуфер (5.8 ГГц), планарный ленточный твиттер Fostex, Hi-Res, Bluetooth. Премиум-версия с кристальными высокими.</div>
+        <div class="card-price">от 22 999 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/edifier_s360db_brown/p29001465/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+      </div>
+    </div>
+
+    <div class="card" data-num="9" data-price="6299" onclick="window.open('https://rozetka.com.ua/logitech_2.1_z623_980_000403/p153530/','_blank')">
+      <div class="ticket-number">9</div>
+      <div class="img-wrap">
+        <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/153530.jpg" alt="Logitech Z623" loading="lazy">
+        <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#001a1a,#003d3d)">🔊</div>
+      </div>
+      <div class="card-body">
+        <span class="card-category-badge badge-speaker">Акустика 2.1</span>
+        <div class="card-name">Logitech Z623</div>
+        <div class="card-desc">200Вт пик, 2.1 система с THX сертификацией, 130Вт сабвуфер. Стереовход 3.5мм + RCA. Бюджетный вход в нормальный бас.</div>
+        <div class="card-price">от 6 299 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/logitech_2.1_z623_980_000403/p153530/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ТЕЛЕВИЗОРЫ -->
+  <div class="category-title">📺 Телевизоры <span style="font-size:16px;color:rgba(255,255,255,0.4);font-weight:400;">50" до $400</span></div>
+  <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));">
+
+    <div class="card" data-num="10" data-price="15999" onclick="window.open('https://rozetka.com.ua/hisense-20013852/p443873543/','_blank')">
+      <div class="ticket-number">10</div>
+      <div class="img-wrap">
+        <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/443873543.jpg" alt="Hisense 50A6N" loading="lazy">
+        <div class="product-img-placeholder" style="display:none">📺</div>
+      </div>
+      <div class="card-body">
+        <span class="card-category-badge badge-tv">Телевизор · Розетка</span>
+        <div class="card-name">Hisense 50A6N — НОВЫЙ</div>
+        <div class="card-desc">50", 4K, Smart TV (VIDAA), Dolby Vision, Dolby Atmos, 3×HDMI, прямая LED подсветка. Лучший бюджетный новый 50".</div>
+        <div class="card-price">~15 999 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/hisense-20013852/p443873543/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+      </div>
+    </div>
+
+    <div class="card" data-num="11" data-price="12000" onclick="window.open('https://www.olx.ua/uk/elektronika/tv-videotehnika/televizory/q-50-%D0%B4%D1%8E%D0%B9%D0%BC%D0%BE%D0%B2/','_blank')">
+      <div class="ticket-number">11</div>
+      <div class="img-wrap loaded">
+        <div class="product-img-placeholder" style="background:linear-gradient(135deg,#1a1400,#3d3000)">📺</div>
+      </div>
+      <div class="card-body">
+        <span class="card-category-badge badge-tv">Телевизор · OLX</span>
+        <div class="card-name">Samsung / LG 50" — Б/У</div>
+        <div class="card-desc">Поиск б/у телевизоров 50" на OLX. Реальные Samsung и LG флагманы 2021–2023 года за 10 000–14 000 грн. Объявления обновляются ежедневно.</div>
+        <div class="card-price">~10 000–14 000 грн</div>
+        <a class="card-link" href="https://www.olx.ua/uk/elektronika/tv-videotehnika/televizory/q-50-%D0%B4%D1%8E%D0%B9%D0%BC%D0%BE%D0%B2/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Поиск на OLX →</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- КРУТИЛКА — аккордеон внизу -->
+<details class="spin-accordion">
+  <summary>🎲 Не можешь выбрать? Крути колесо удачи</summary>
+  <div class="spin-section">
+    <div id="winner-display">Нажми кнопку 👇</div>
+    <button class="spin-btn" id="spin-btn" onclick="spin()">🎲 КРУТИТЬ</button>
+  </div>
+</details>
+
+<footer>
+  Все цены актуальны на момент составления подборки · Нажимай на карточки для перехода к товару<br>
+  <span id="year"></span> · misha-coder
+</footer>
+
+<script>
+  // --- Image loading states: reveal image on load, show emoji fallback on error ---
+  document.querySelectorAll('.img-wrap > .product-img').forEach(img => {
+    const wrap = img.parentElement;
+    const showFallback = () => {
+      wrap.classList.add('failed');
+      img.style.display = 'none';
+      const ph = wrap.querySelector('.product-img-placeholder');
+      if (ph) ph.style.display = 'flex';
+    };
+    if (img.complete) {
+      img.naturalWidth ? wrap.classList.add('loaded') : showFallback();
+    } else {
+      img.addEventListener('load', () => wrap.classList.add('loaded'));
+      img.addEventListener('error', showFallback);
+    }
+  });
+
+  // --- Footer year ---
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // --- Prize pool: sum card prices, round to nearest 1000 ---
+  (function () {
+    let total = 0;
+    document.querySelectorAll('.card[data-price]').forEach(c => {
+      total += parseInt(c.dataset.price, 10) || 0;
+    });
+    const rounded = Math.round(total / 1000) * 1000;
+    document.getElementById('pool-total').textContent =
+      '~' + rounded.toLocaleString('ru-RU').replace(/,/g, ' ') + ' грн';
+  })();
+
+  const items = [
+    { num: 1, name: 'Кресло Ergohuman Plus Legrest' },
+    { num: 2, name: 'Кресло Rondi Titanium Multibuttons' },
+    { num: 3, name: 'Кресло Sihoo DORO C300L' },
+    { num: 4, name: 'Принтер Elegoo Centauri Carbon' },
+    { num: 5, name: 'Принтер Creality K1C' },
+    { num: 6, name: 'Принтер Bambu Lab A1 Mini' },
+    { num: 7, name: 'Акустика Edifier S351DB 2.1' },
+    { num: 8, name: 'Акустика Edifier S360DB 2.1' },
+    { num: 9, name: 'Акустика Logitech Z623 2.1' },
+    { num: 10, name: 'Телевизор Hisense 50A6N (Розетка)' },
+    { num: 11, name: 'Телевизор 50" Б/У (OLX)' },
+  ];
+
+  let spinning = false;
+
+  function spin() {
+    if (spinning) return;
+    spinning = true;
+
+    const btn = document.getElementById('spin-btn');
+    if (btn) btn.disabled = true;
+
+    // Clear previous winner
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('winner-glow'));
+    const display = document.getElementById('winner-display');
+
+    let count = 0;
+    const totalSpins = 28 + Math.floor(Math.random() * 12);
+    const winnerIndex = Math.floor(Math.random() * items.length);
+
+    const tick = () => {
+      const randomItem = items[Math.floor(Math.random() * items.length)];
+      display.textContent = `🎲  ${randomItem.num} — ${randomItem.name}`;
+      count++;
+
+      if (count >= totalSpins) {
+        const winner = items[winnerIndex];
+        display.innerHTML = `🏆 ПОБЕДИТЕЛЬ: <span style="color:#fff">№${winner.num} — ${winner.name}</span>`;
+
+        // Highlight winner card
+        const winnerCard = document.querySelector(`.card[data-num="${winner.num}"]`);
+        if (winnerCard) {
+          winnerCard.classList.add('winner-glow');
+          winnerCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Confetti
+        launchConfetti();
+        spinning = false;
+        if (btn) btn.disabled = false;
+        return;
+      }
+      // ease-out: slow down as we approach the winner
+      const delay = count < totalSpins * 0.7 ? 80 : 180;
+      setTimeout(tick, delay);
+    };
+    tick();
+  }
+
+  function launchConfetti() {
+    const container = document.getElementById('confetti');
+    container.style.display = 'block';
+    container.innerHTML = '';
+
+    const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD'];
+
+    for (let i = 0; i < 80; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.cssText = `
+        left: ${Math.random() * 100}vw;
+        top: -20px;
+        background: ${colors[Math.floor(Math.random() * colors.length)]};
+        width: ${6 + Math.random() * 10}px;
+        height: ${6 + Math.random() * 10}px;
+        border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+        animation-delay: ${Math.random() * 1.5}s;
+        animation-duration: ${2.5 + Math.random() * 1.5}s;
+      `;
+      container.appendChild(piece);
+    }
+
+    setTimeout(() => {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    }, 5000);
+  }
+</script>
+
+</body>
+</html>
