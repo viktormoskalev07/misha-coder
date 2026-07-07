@@ -69,14 +69,34 @@
     font-weight: 400;
   }
 
-  /* SPIN BUTTON */
+  /* SPIN ACCORDION */
+  .spin-accordion {
+    background: var(--accent);
+    border-top: 1px solid rgba(255,215,0,0.2);
+    border-bottom: 1px solid rgba(255,215,0,0.2);
+  }
+  .spin-accordion > summary {
+    padding: 22px 20px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    list-style: none;
+    user-select: none;
+    letter-spacing: 0.5px;
+    transition: opacity 0.2s;
+  }
+  .spin-accordion > summary:hover { opacity: 0.8; }
+  .spin-accordion > summary::-webkit-details-marker { display: none; }
+  .spin-accordion > summary::after { content: ' ▾'; font-size: 16px; }
+  .spin-accordion[open] > summary::after { content: ' ▴'; }
+
+  /* SPIN SECTION */
   .spin-section {
     text-align: center;
-    padding: 40px 20px;
-    background: var(--accent);
-    border-bottom: 1px solid rgba(255,215,0,0.15);
+    padding: 20px 20px 40px;
   }
-  .spin-section p { color: rgba(255,255,255,0.7); margin-bottom: 20px; font-size: 16px; }
   #winner-display {
     font-size: clamp(20px, 4vw, 36px);
     font-weight: 900;
@@ -246,33 +266,29 @@
   <p class="subtitle">11 призов · 4 категории · Нажми — выбери победителя</p>
 </header>
 
-<div class="spin-section">
-  <p>Не можешь выбрать? Пусть удача решит!</p>
-  <div id="winner-display">Нажми кнопку 👇</div>
-  <button class="spin-btn" onclick="spin()">🎲 КРУТИТЬ</button>
-</div>
-
+<!-- ТОВАРЫ -->
 <div class="categories">
 
-  <!-- CHAIRS -->
+  <!-- КРЕСЛА -->
   <div class="category-title">🪑 Кресла <span style="font-size:16px;color:rgba(255,255,255,0.4);font-weight:400;">до 25 000 грн</span></div>
   <div class="grid">
 
-    <div class="card" data-num="1" onclick="window.open('https://vincom.com.ua/ua/shop/product/ergonomichnoe-kreslo-comfort-seating-ergohuman-plus-station','_blank')">
+    <div class="card" data-num="1" onclick="window.open('https://rozetka.com.ua/293399073/p293399073/','_blank')">
       <div class="ticket-number">1</div>
-      <div class="product-img-placeholder">🪑</div>
+      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/293399073.jpg" alt="Ergohuman Plus Legrest" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="product-img-placeholder" style="display:none">🪑</div>
       <div class="card-body">
         <span class="card-category-badge badge-chair">Кресло</span>
         <div class="card-name">Ergohuman Plus Legrest</div>
         <div class="card-desc">Адаптивный поясничный валик + подставка для ног. Рост до 195 см, нагрузка 130 кг. Лучший для спины при гиперлордозе.</div>
         <div class="card-price">~20 000 грн</div>
-        <a class="card-link" href="https://vincom.com.ua/ua/shop/product/ergonomichnoe-kreslo-comfort-seating-ergohuman-plus-station" target="_blank" onclick="event.stopPropagation()">Открыть на VinCom →</a>
+        <a class="card-link" href="https://rozetka.com.ua/293399073/p293399073/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
     <div class="card" data-num="2" onclick="window.open('https://rozetka.com.ua/ua/rondi-1410199003/p508667369/','_blank')">
       <div class="ticket-number">2</div>
-      <img class="product-img" src="https://content2.rozetka.com.ua/goods/images/big_tile/508667370.jpg" alt="Rondi Titanium" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="product-img" src="https://content2.rozetka.com.ua/goods/images/big/508667369.jpg" alt="Rondi Titanium Multibuttons" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="product-img-placeholder" style="display:none">🪑</div>
       <div class="card-body">
         <span class="card-category-badge badge-chair">Кресло</span>
@@ -285,120 +301,123 @@
 
     <div class="card" data-num="3" onclick="window.open('https://rozetka.com.ua/ua/sihoo-doro-c300l-a3-101/p538166224/','_blank')">
       <div class="ticket-number">3</div>
-      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big_tile/588419744.jpg" alt="Sihoo DORO C300L" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/538166224.jpg" alt="Sihoo DORO C300L" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="product-img-placeholder" style="display:none">🪑</div>
       <div class="card-body">
         <span class="card-category-badge badge-chair">Кресло</span>
         <div class="card-name">Sihoo DORO C300L</div>
         <div class="card-desc">Двойная динамическая поясничная поддержка (высота + глубина), 6D подлокотники, сетка, офисный стиль.</div>
-        <div class="card-price">~19 000 грн</div>
+        <div class="card-price">від 17 099 грн</div>
         <a class="card-link" href="https://rozetka.com.ua/ua/sihoo-doro-c300l-a3-101/p538166224/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
   </div>
 
-  <!-- 3D PRINTERS -->
+  <!-- 3D ПРИНТЕРЫ -->
   <div class="category-title">🖨️ 3D Принтеры <span style="font-size:16px;color:rgba(255,255,255,0.4);font-weight:400;">до $300</span></div>
   <div class="grid">
 
-    <div class="card" data-num="4" onclick="window.open('https://www.elegoo.com/products/elegoo-centauri-carbon','_blank')">
+    <div class="card" data-num="4" onclick="window.open('https://rozetka.com.ua/ua/527289799/p527289799/','_blank')">
       <div class="ticket-number">4</div>
-      <div class="product-img-placeholder" style="background:linear-gradient(135deg,#1a0a00,#3d1a00)">🖨️</div>
+      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/527289799.jpg" alt="Elegoo Centauri Carbon" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" style="background:linear-gradient(135deg,#1a0a00,#3d1a00)">
+      <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#1a0a00,#3d1a00)">🖨️</div>
       <div class="card-body">
         <span class="card-category-badge badge-printer">3D Принтер</span>
         <div class="card-name">Elegoo Centauri Carbon</div>
         <div class="card-desc">Полностью закрытый, CoreXY, 500 мм/с, встроенная камера, автокалибровка. Лучший закрытый в бюджете.</div>
-        <div class="card-price">$299</div>
-        <a class="card-link" href="https://www.elegoo.com/products/elegoo-centauri-carbon" target="_blank" onclick="event.stopPropagation()">Открыть на Elegoo →</a>
+        <div class="card-price">від 18 800 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/527289799/p527289799/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
-    <div class="card" data-num="5" onclick="window.open('https://www.creality.com/products/creality-k1c-3d-printer','_blank')">
+    <div class="card" data-num="5" onclick="window.open('https://rozetka.com.ua/ua/creality-cr-k1c/p435637793/','_blank')">
       <div class="ticket-number">5</div>
-      <div class="product-img-placeholder" style="background:linear-gradient(135deg,#1a0a0a,#3d0a0a)">🖨️</div>
+      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/435637793.jpg" alt="Creality K1C" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" style="background:linear-gradient(135deg,#1a0a0a,#3d0a0a)">
+      <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#1a0a0a,#3d0a0a)">🖨️</div>
       <div class="card-body">
         <span class="card-category-badge badge-printer">3D Принтер</span>
         <div class="card-name">Creality K1C</div>
         <div class="card-desc">Закрытый, CoreXY, 600 мм/с, поддержка карбон-филаментов и инженерных материалов, автоуровень.</div>
-        <div class="card-price">~$269</div>
-        <a class="card-link" href="https://www.creality.com/products/creality-k1c-3d-printer" target="_blank" onclick="event.stopPropagation()">Открыть на Creality →</a>
+        <div class="card-price">від 20 599 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/creality-cr-k1c/p435637793/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
-    <div class="card" data-num="6" onclick="window.open('https://bambulab.com/en/bambu-lab-a1-mini','_blank')">
+    <div class="card" data-num="6" onclick="window.open('https://rozetka.com.ua/ua/bambu-lab-lab-a1-mini/p437133701/','_blank')">
       <div class="ticket-number">6</div>
-      <div class="product-img-placeholder" style="background:linear-gradient(135deg,#000d1a,#001a3d)">🖨️</div>
+      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/437133701.jpg" alt="Bambu Lab A1 Mini" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" style="background:linear-gradient(135deg,#000d1a,#001a3d)">
+      <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#000d1a,#001a3d)">🖨️</div>
       <div class="card-body">
         <span class="card-category-badge badge-printer">3D Принтер</span>
-        <div class="card-name">Bambu Lab A1 Mini Combo</div>
+        <div class="card-name">Bambu Lab A1 Mini</div>
         <div class="card-desc">Лучшее качество печати в бюджете. AMS Lite на 4 цвета включён. Открытый принтер CoreXY с автокалибровкой и AI-детектором дефектов.</div>
-        <div class="card-price">$299</div>
-        <a class="card-link" href="https://bambulab.com/en/bambu-lab-a1-mini" target="_blank" onclick="event.stopPropagation()">Открыть на Bambu Lab →</a>
+        <div class="card-price">від 12 000 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/bambu-lab-lab-a1-mini/p437133701/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
   </div>
 
-  <!-- SPEAKERS -->
+  <!-- АКУСТИКА -->
   <div class="category-title">🔊 Акустика 2.1 <span style="font-size:16px;color:rgba(255,255,255,0.4);font-weight:400;">для стола · с сабвуфером</span></div>
   <div class="grid">
 
-    <div class="card" data-num="7" onclick="window.open('https://rozetka.com.ua/591670591/p591670591/','_blank')">
+    <div class="card" data-num="7" onclick="window.open('https://rozetka.com.ua/edifier_s351db/p127596711/','_blank')">
       <div class="ticket-number">7</div>
-      <img class="product-img" src="https://content.rozetka.com.ua/goods/images/big/17497732.jpg" alt="Edifier S351DB" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/127596711.jpg" alt="Edifier S351DB" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#0a1a0a,#1a2a0a)">🔊</div>
       <div class="card-body">
         <span class="card-category-badge badge-speaker">Акустика 2.1</span>
         <div class="card-name">Edifier S351DB</div>
         <div class="card-desc">150Вт 2.1, 8" сабвуфер, Bluetooth aptX, оптика + коаксиал. Деревянный корпус, титановые твиттеры. Лучший выбор для клубного баса на столе.</div>
-        <div class="card-price">от 14 040 грн</div>
-        <a class="card-link" href="https://rozetka.com.ua/591670591/p591670591/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+        <div class="card-price">від 14 040 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/edifier_s351db/p127596711/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
-    <div class="card" data-num="8" onclick="window.open('https://rozetka.com.ua/edifier_s360db_brown/p29001465/','_blank')">
+    <div class="card" data-num="8" onclick="window.open('https://rozetka.com.ua/ua/edifier_s360db_brown/p29001465/','_blank')">
       <div class="ticket-number">8</div>
-      <img class="product-img" src="https://content2.rozetka.com.ua/goods/images/big/284557076.jpg" alt="Edifier S360DB" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/29001465.jpg" alt="Edifier S360DB" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#0a0a1a,#1a1a0a)">🔊</div>
       <div class="card-body">
         <span class="card-category-badge badge-speaker">Акустика 2.1</span>
         <div class="card-name">Edifier S360DB</div>
         <div class="card-desc">150Вт 2.1, беспроводной сабвуфер (5.8 ГГц), планарный ленточный твиттер Fostex, Hi-Res, Bluetooth. Премиум-версия с кристальными высокими.</div>
-        <div class="card-price">от 18 603 грн</div>
-        <a class="card-link" href="https://rozetka.com.ua/edifier_s360db_brown/p29001465/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+        <div class="card-price">від 22 999 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/edifier_s360db_brown/p29001465/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
-    <div class="card" data-num="9" onclick="window.open('https://rozetka.com.ua/logitech-980-000403/p417072984/','_blank')">
+    <div class="card" data-num="9" onclick="window.open('https://rozetka.com.ua/logitech_2.1_z623_980_000403/p153530/','_blank')">
       <div class="ticket-number">9</div>
-      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/417072984.jpg" alt="Logitech Z623" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/153530.jpg" alt="Logitech Z623" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#001a1a,#003d3d)">🔊</div>
       <div class="card-body">
         <span class="card-category-badge badge-speaker">Акустика 2.1</span>
         <div class="card-name">Logitech Z623</div>
-        <div class="card-desc">200Вт пик, 2.1 система с THX сертификацией, 130Вт сабвуфер. Стереовход 3.5мм + RCA. Бюджетный вход в нормальный бас — на порядок лучше советской акустики.</div>
-        <div class="card-price">от 6 299 грн</div>
-        <a class="card-link" href="https://rozetka.com.ua/logitech-980-000403/p417072984/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+        <div class="card-desc">200Вт пик, 2.1 система с THX сертификацией, 130Вт сабвуфер. Стереовход 3.5мм + RCA. Бюджетный вход в нормальный бас.</div>
+        <div class="card-price">від 6 299 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/logitech_2.1_z623_980_000403/p153530/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
   </div>
 
-  <!-- TVs -->
+  <!-- ТЕЛЕВИЗОРЫ -->
   <div class="category-title">📺 Телевизоры <span style="font-size:16px;color:rgba(255,255,255,0.4);font-weight:400;">50" до $400</span></div>
   <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));">
 
-    <div class="card" data-num="10" onclick="window.open('https://rozetka.com.ua/ua/hisense-20013852/p443873543/','_blank')">
+    <div class="card" data-num="10" onclick="window.open('https://rozetka.com.ua/hisense-20013852/p443873543/','_blank')">
       <div class="ticket-number">10</div>
-      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big_tile/443873544.jpg" alt="Hisense 50A6N" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/443873543.jpg" alt="Hisense 50A6N" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="product-img-placeholder" style="display:none">📺</div>
       <div class="card-body">
         <span class="card-category-badge badge-tv">Телевизор · Розетка</span>
         <div class="card-name">Hisense 50A6N — НОВЫЙ</div>
         <div class="card-desc">50", 4K, Smart TV (VIDAA), Dolby Vision, Dolby Atmos, 3×HDMI, прямая LED подсветка. Лучший бюджетный новый 50".</div>
-        <div class="card-price">~13 000–14 000 грн</div>
-        <a class="card-link" href="https://rozetka.com.ua/ua/hisense-20013852/p443873543/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+        <div class="card-price">~15 999 грн</div>
+        <a class="card-link" href="https://rozetka.com.ua/hisense-20013852/p443873543/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
@@ -418,6 +437,15 @@
 
 </div>
 
+<!-- КРУТИЛКА — аккордеон внизу -->
+<details class="spin-accordion">
+  <summary>🎲 Не можешь выбрать? Крути колесо удачи</summary>
+  <div class="spin-section">
+    <div id="winner-display">Нажми кнопку 👇</div>
+    <button class="spin-btn" onclick="spin()">🎲 КРУТИТЬ</button>
+  </div>
+</details>
+
 <footer>
   Все цены актуальны на момент составления подборки · Нажимай на карточки для перехода к товару
 </footer>
@@ -429,7 +457,7 @@
     { num: 3, name: 'Кресло Sihoo DORO C300L' },
     { num: 4, name: 'Принтер Elegoo Centauri Carbon' },
     { num: 5, name: 'Принтер Creality K1C' },
-    { num: 6, name: 'Принтер Bambu Lab A1 Mini Combo' },
+    { num: 6, name: 'Принтер Bambu Lab A1 Mini' },
     { num: 7, name: 'Акустика Edifier S351DB 2.1' },
     { num: 8, name: 'Акустика Edifier S360DB 2.1' },
     { num: 9, name: 'Акустика Logitech Z623 2.1' },
