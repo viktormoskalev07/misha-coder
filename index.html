@@ -240,6 +240,17 @@
     border-color: rgba(255,215,0,0.4);
     color: var(--gold);
   }
+  /* STOCK STATUS */
+  .stock {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 700;
+    padding: 5px 10px; border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  .stock-in  { color: #4ade80; background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.3); }
+  .stock-out { color: #f87171; background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.3); }
+  .stock-alt { color: #fbbf24; background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.3); }
+  .card.sold-out .product-img { opacity: 0.55; filter: grayscale(0.4); }
 
   /* FOOTER */
   footer {
@@ -273,41 +284,44 @@
   <div class="category-title">🪑 Кресла <span style="font-size:16px;color:rgba(255,255,255,0.4);font-weight:400;">до 25 000 грн</span></div>
   <div class="grid">
 
-    <div class="card" data-num="1" onclick="window.open('https://rozetka.com.ua/293399073/p293399073/','_blank')">
+    <div class="card" data-num="1" onclick="window.open('https://rozetka.com.ua/ua/anda-seat-ad-wy-01-bbb/p469810864/','_blank')">
       <div class="ticket-number">1</div>
-      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/293399073.jpg" alt="Ergohuman Plus Legrest" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="product-img" src="images/chair1.jpg" alt="Anda Seat X-Air Mega Size XL" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="product-img-placeholder" style="display:none">🪑</div>
       <div class="card-body">
-        <span class="card-category-badge badge-chair">Кресло</span>
-        <div class="card-name">Ergohuman Plus Legrest</div>
-        <div class="card-desc">Адаптивный поясничный валик + подставка для ног. Рост до 195 см, нагрузка 130 кг. Лучший для спины при гиперлордозе.</div>
-        <div class="card-price">~20 000 грн</div>
-        <a class="card-link" href="https://rozetka.com.ua/293399073/p293399073/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+        <span class="card-category-badge badge-chair">Кресло · Gaming XL</span>
+        <div class="card-name">Anda Seat X-Air Mega Size XL</div>
+        <div class="card-desc">Геймерское эргономичное XL-кресло: увеличенная спинка под рост ~195 см, нагрузка до 120 кг, магнитный подголовник, сетка. Создано для многочасовых сессий.</div>
+        <div class="card-price">18 999 грн</div>
+        <div class="stock stock-in">✅ Есть в наличии · 18 999 ₴</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/anda-seat-ad-wy-01-bbb/p469810864/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
-    <div class="card" data-num="2" onclick="window.open('https://rozetka.com.ua/ua/rondi-1410199003/p508667369/','_blank')">
+    <div class="card" data-num="2" onclick="window.open('https://rozetka.com.ua/ua/officepro-od950b/p538166189/','_blank')">
       <div class="ticket-number">2</div>
-      <img class="product-img" src="https://content2.rozetka.com.ua/goods/images/big/508667369.jpg" alt="Rondi Titanium Multibuttons" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="product-img" src="images/chair2.jpg" alt="OfficePro OD950B" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="product-img-placeholder" style="display:none">🪑</div>
       <div class="card-body">
         <span class="card-category-badge badge-chair">Кресло</span>
-        <div class="card-name">Rondi Titanium Multibuttons</div>
-        <div class="card-desc">Рост до 205 см, нагрузка 150 кг. Активная поясничная поддержка, 3D подголовник, слайдер. Офисный стиль.</div>
-        <div class="card-price">~17 300 грн</div>
-        <a class="card-link" href="https://rozetka.com.ua/ua/rondi-1410199003/p508667369/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+        <div class="card-name">OfficePro OD950B</div>
+        <div class="card-desc">Эргономичная сетка, регулируемый подголовник + подставка для ног. Динамическая поясничная поддержка. Для длинных 12-часовых сессий.</div>
+        <div class="card-price">17 999 грн</div>
+        <div class="stock stock-in">✅ Есть в наличии · 17 999 ₴</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/officepro-od950b/p538166189/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
     <div class="card" data-num="3" onclick="window.open('https://rozetka.com.ua/ua/sihoo-doro-c300l-a3-101/p538166224/','_blank')">
       <div class="ticket-number">3</div>
-      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/538166224.jpg" alt="Sihoo DORO C300L" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="product-img" src="images/p3.jpg" alt="Sihoo DORO C300L" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="product-img-placeholder" style="display:none">🪑</div>
       <div class="card-body">
         <span class="card-category-badge badge-chair">Кресло</span>
         <div class="card-name">Sihoo DORO C300L</div>
         <div class="card-desc">Двойная динамическая поясничная поддержка (высота + глубина), 6D подлокотники, сетка, офисный стиль.</div>
         <div class="card-price">від 17 099 грн</div>
+        <div class="stock stock-in">✅ Есть в наличии · 17 999 ₴</div>
         <a class="card-link" href="https://rozetka.com.ua/ua/sihoo-doro-c300l-a3-101/p538166224/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
@@ -315,45 +329,48 @@
   </div>
 
   <!-- 3D ПРИНТЕРЫ -->
-  <div class="category-title">🖨️ 3D Принтеры <span style="font-size:16px;color:rgba(255,255,255,0.4);font-weight:400;">до $300</span></div>
+  <div class="category-title">🖨️ 3D Принтеры <span style="font-size:16px;color:rgba(255,255,255,0.4);font-weight:400;">закрытые · компактные · переносимые</span></div>
   <div class="grid">
 
-    <div class="card" data-num="4" onclick="window.open('https://rozetka.com.ua/ua/527289799/p527289799/','_blank')">
+    <div class="card" data-num="4" onclick="window.open('https://rozetka.com.ua/ua/creality-k1c-2025/p565667075/','_blank')">
       <div class="ticket-number">4</div>
-      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/527289799.jpg" alt="Elegoo Centauri Carbon" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" style="background:linear-gradient(135deg,#1a0a00,#3d1a00)">
+      <img class="product-img" src="images/printer4.jpg" alt="Creality K1C 2025" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#1a0a00,#3d1a00)">🖨️</div>
       <div class="card-body">
-        <span class="card-category-badge badge-printer">3D Принтер</span>
-        <div class="card-name">Elegoo Centauri Carbon</div>
-        <div class="card-desc">Полностью закрытый, CoreXY, 500 мм/с, встроенная камера, автокалибровка. Лучший закрытый в бюджете.</div>
-        <div class="card-price">від 18 800 грн</div>
-        <a class="card-link" href="https://rozetka.com.ua/ua/527289799/p527289799/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+        <span class="card-category-badge badge-printer">3D Принтер · закрытый</span>
+        <div class="card-name">Creality K1C 2025</div>
+        <div class="card-desc">Полностью закрытый CoreXY-бокс, 600 мм/с, карбон, ИИ-камера, автокалибровка. Компактный корпус — переносится одной рукой. Мастерская из коробки.</div>
+        <div class="card-price">23 499 грн</div>
+        <div class="stock stock-in">✅ Есть в наличии · 23 499 ₴</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/creality-k1c-2025/p565667075/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
-    <div class="card" data-num="5" onclick="window.open('https://rozetka.com.ua/ua/creality-cr-k1c/p435637793/','_blank')">
+    <div class="card" data-num="5" onclick="window.open('https://rozetka.com.ua/ua/589148965/p589148965/','_blank')">
       <div class="ticket-number">5</div>
-      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/435637793.jpg" alt="Creality K1C" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" style="background:linear-gradient(135deg,#1a0a0a,#3d0a0a)">
+      <img class="product-img" src="images/printerN5.jpg" alt="Creality K1 SE" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#1a0a0a,#3d0a0a)">🖨️</div>
       <div class="card-body">
-        <span class="card-category-badge badge-printer">3D Принтер</span>
-        <div class="card-name">Creality K1C</div>
-        <div class="card-desc">Закрытый, CoreXY, 600 мм/с, поддержка карбон-филаментов и инженерных материалов, автоуровень.</div>
-        <div class="card-price">від 20 599 грн</div>
-        <a class="card-link" href="https://rozetka.com.ua/ua/creality-cr-k1c/p435637793/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+        <span class="card-category-badge badge-printer">3D Принтер · закрытый</span>
+        <div class="card-name">Creality K1 SE</div>
+        <div class="card-desc">Полностью закрытый CoreXY-бокс со стеклянной дверцей, до 600 мм/с, автоуровень. Компактный ~12,5 кг — легко переносить между комнатами.</div>
+        <div class="card-price">18 000 грн</div>
+        <div class="stock stock-in">✅ Есть в наличии · 18 000 ₴</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/589148965/p589148965/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
-    <div class="card" data-num="6" onclick="window.open('https://rozetka.com.ua/ua/bambu-lab-lab-a1-mini/p437133701/','_blank')">
+    <div class="card" data-num="6" onclick="window.open('https://rozetka.com.ua/ua/505061949/p505061949/','_blank')">
       <div class="ticket-number">6</div>
-      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/437133701.jpg" alt="Bambu Lab A1 Mini" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" style="background:linear-gradient(135deg,#000d1a,#001a3d)">
+      <img class="product-img" src="images/printerN6.jpg" alt="Anycubic Kobra S1 Combo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#000d1a,#001a3d)">🖨️</div>
       <div class="card-body">
-        <span class="card-category-badge badge-printer">3D Принтер</span>
-        <div class="card-name">Bambu Lab A1 Mini</div>
-        <div class="card-desc">Лучшее качество печати в бюджете. AMS Lite на 4 цвета включён. Открытый принтер CoreXY с автокалибровкой и AI-детектором дефектов.</div>
-        <div class="card-price">від 12 000 грн</div>
-        <a class="card-link" href="https://rozetka.com.ua/ua/bambu-lab-lab-a1-mini/p437133701/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+        <span class="card-category-badge badge-printer">3D Принтер · закрытый</span>
+        <div class="card-name">Anycubic Kobra S1 Combo</div>
+        <div class="card-desc">Закрытый CoreXY со стеклянной дверцей + модуль мультицветной печати (4 цвета). До 600 мм/с. Компактный корпус — легко переставлять. Топ мастерской.</div>
+        <div class="card-price">34 727 грн</div>
+        <div class="stock stock-in">✅ Есть в наличии · 34 727 ₴</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/505061949/p505061949/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
@@ -363,41 +380,44 @@
   <div class="category-title">🔊 Акустика 2.1 <span style="font-size:16px;color:rgba(255,255,255,0.4);font-weight:400;">для стола · с сабвуфером</span></div>
   <div class="grid">
 
-    <div class="card" data-num="7" onclick="window.open('https://rozetka.com.ua/edifier_s351db/p127596711/','_blank')">
+    <div class="card" data-num="7" onclick="window.open('https://rozetka.com.ua/ua/582369028/p582369028/','_blank')">
       <div class="ticket-number">7</div>
-      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/127596711.jpg" alt="Edifier S351DB" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="product-img" src="images/speaker7.jpg" alt="SVEN MS-2055 2.1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#0a1a0a,#1a2a0a)">🔊</div>
       <div class="card-body">
         <span class="card-category-badge badge-speaker">Акустика 2.1</span>
-        <div class="card-name">Edifier S351DB</div>
-        <div class="card-desc">150Вт 2.1, 8" сабвуфер, Bluetooth aptX, оптика + коаксиал. Деревянный корпус, титановые твиттеры. Лучший выбор для клубного баса на столе.</div>
-        <div class="card-price">від 14 040 грн</div>
-        <a class="card-link" href="https://rozetka.com.ua/edifier_s351db/p127596711/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+        <div class="card-name">SVEN MS-2055</div>
+        <div class="card-desc">2.1 с деревянным сабвуфером, LED-дисплей, пульт, Bluetooth, USB/SD, FM. Бюджетный клубный бас для комнаты.</div>
+        <div class="card-price">5 600 грн</div>
+        <div class="stock stock-in">✅ Есть в наличии · 5 600 ₴</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/582369028/p582369028/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
     <div class="card" data-num="8" onclick="window.open('https://rozetka.com.ua/ua/edifier_s360db_brown/p29001465/','_blank')">
       <div class="ticket-number">8</div>
-      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/29001465.jpg" alt="Edifier S360DB" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="product-img" src="images/p8.jpg" alt="Edifier S360DB" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#0a0a1a,#1a1a0a)">🔊</div>
       <div class="card-body">
         <span class="card-category-badge badge-speaker">Акустика 2.1</span>
         <div class="card-name">Edifier S360DB</div>
         <div class="card-desc">150Вт 2.1, беспроводной сабвуфер (5.8 ГГц), планарный ленточный твиттер Fostex, Hi-Res, Bluetooth. Премиум-версия с кристальными высокими.</div>
         <div class="card-price">від 22 999 грн</div>
+        <div class="stock stock-in">✅ Есть в наличии · 23 999 ₴</div>
         <a class="card-link" href="https://rozetka.com.ua/ua/edifier_s360db_brown/p29001465/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
     <div class="card" data-num="9" onclick="window.open('https://rozetka.com.ua/logitech_2.1_z623_980_000403/p153530/','_blank')">
       <div class="ticket-number">9</div>
-      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/153530.jpg" alt="Logitech Z623" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="product-img" src="images/p9.jpg" alt="Logitech Z623" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#001a1a,#003d3d)">🔊</div>
       <div class="card-body">
         <span class="card-category-badge badge-speaker">Акустика 2.1</span>
         <div class="card-name">Logitech Z623</div>
         <div class="card-desc">200Вт пик, 2.1 система с THX сертификацией, 130Вт сабвуфер. Стереовход 3.5мм + RCA. Бюджетный вход в нормальный бас.</div>
         <div class="card-price">від 6 299 грн</div>
+        <div class="stock stock-alt">🟡 Есть у продавца RozetkaEU · 6 895 ₴</div>
         <a class="card-link" href="https://rozetka.com.ua/logitech_2.1_z623_980_000403/p153530/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
@@ -405,31 +425,34 @@
   </div>
 
   <!-- ТЕЛЕВИЗОРЫ -->
-  <div class="category-title">📺 Телевизоры <span style="font-size:16px;color:rgba(255,255,255,0.4);font-weight:400;">50" до $400</span></div>
+  <div class="category-title">📺 Телевизоры <span style="font-size:16px;color:rgba(255,255,255,0.4);font-weight:400;">50" 4K · новый QLED + живое б/у</span></div>
   <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));">
 
-    <div class="card" data-num="10" onclick="window.open('https://rozetka.com.ua/hisense-20013852/p443873543/','_blank')">
+    <div class="card" data-num="10" onclick="window.open('https://rozetka.com.ua/ua/tcl-50p7k/p530401739/','_blank')">
       <div class="ticket-number">10</div>
-      <img class="product-img" src="https://content1.rozetka.com.ua/goods/images/big/443873543.jpg" alt="Hisense 50A6N" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="product-img" src="images/tv10.jpg" alt="TCL 50P7K QLED" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="product-img-placeholder" style="display:none">📺</div>
       <div class="card-body">
         <span class="card-category-badge badge-tv">Телевизор · Розетка</span>
-        <div class="card-name">Hisense 50A6N — НОВЫЙ</div>
-        <div class="card-desc">50", 4K, Smart TV (VIDAA), Dolby Vision, Dolby Atmos, 3×HDMI, прямая LED подсветка. Лучший бюджетный новый 50".</div>
-        <div class="card-price">~15 999 грн</div>
-        <a class="card-link" href="https://rozetka.com.ua/hisense-20013852/p443873543/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
+        <div class="card-name">TCL 50P7K QLED</div>
+        <div class="card-desc">50", 4K QLED, Google TV, Dolby Vision + Dolby Atmos, AiPQ-процессор, HDR10+. Настоящий домашний кинотеатр.</div>
+        <div class="card-price">21 999 грн</div>
+        <div class="stock stock-in">✅ Есть в наличии · 21 999 ₴</div>
+        <a class="card-link" href="https://rozetka.com.ua/ua/tcl-50p7k/p530401739/" target="_blank" onclick="event.stopPropagation()">Открыть на Розетке →</a>
       </div>
     </div>
 
-    <div class="card" data-num="11" onclick="window.open('https://www.olx.ua/uk/elektronika/tv-videotehnika/televizory/q-50-%D0%B4%D1%8E%D0%B9%D0%BC%D0%BE%D0%B2/','_blank')">
+    <div class="card" data-num="11" onclick="window.open('https://www.olx.ua/d/uk/obyavlenie/4k-50-televzor-samsung-ue50tu8000-ua-ID10lxg7.html','_blank')">
       <div class="ticket-number">11</div>
-      <div class="product-img-placeholder" style="background:linear-gradient(135deg,#1a1400,#3d3000)">📺</div>
+      <img class="product-img" src="images/olx11.jpg" alt="Samsung UE50TU8000 50 4K" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="product-img-placeholder" style="display:none;background:linear-gradient(135deg,#1a1400,#3d3000)">📺</div>
       <div class="card-body">
-        <span class="card-category-badge badge-tv">Телевизор · OLX</span>
-        <div class="card-name">Samsung / LG 50" — Б/У</div>
-        <div class="card-desc">Поиск б/у телевизоров 50" на OLX. Реальные Samsung и LG флагманы 2021–2023 года за 10 000–14 000 грн. Объявления обновляются ежедневно.</div>
-        <div class="card-price">~10 000–14 000 грн</div>
-        <a class="card-link" href="https://www.olx.ua/uk/elektronika/tv-videotehnika/televizory/q-50-%D0%B4%D1%8E%D0%B9%D0%BC%D0%BE%D0%B2/" target="_blank" onclick="event.stopPropagation()">Поиск на OLX →</a>
+        <span class="card-category-badge badge-tv">Телевизор · OLX Б/У</span>
+        <div class="card-name">Samsung UE50TU8000</div>
+        <div class="card-desc">50", 4K Crystal UHD, Smart TV (Tizen), HDR. Живое объявление на OLX — конкретный ТВ, торг. Второй экран для кинозоны или спальни.</div>
+        <div class="card-price">11 700 грн (торг)</div>
+        <div class="stock stock-alt">🟡 Реальное объявление OLX · б/у</div>
+        <a class="card-link" href="https://www.olx.ua/d/uk/obyavlenie/4k-50-televzor-samsung-ue50tu8000-ua-ID10lxg7.html" target="_blank" onclick="event.stopPropagation()">Смотреть на OLX →</a>
       </div>
     </div>
 
