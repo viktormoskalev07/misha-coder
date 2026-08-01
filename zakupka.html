@@ -32,6 +32,8 @@
   .buy2 { display:inline-block; background:none; border:1px solid rgba(34,211,238,0.4); color:var(--cyan); font-weight:700; font-size:12.5px; text-decoration:none; padding:8px 12px; border-radius:9px; white-space:nowrap; }
   .buy2:hover { background:rgba(34,211,238,0.1); }
   .buy.free { background:none; color:var(--green); border:1px solid rgba(74,222,128,0.4); }
+  .bought { display:none; font-size:11px; font-weight:800; color:var(--green); background:rgba(74,222,128,0.15); border:1px solid rgba(74,222,128,0.45); padding:3px 9px; border-radius:8px; white-space:nowrap; }
+  .item.done .bought { display:inline-block; }
   .note { background:var(--accent); border-left:3px solid var(--cyan); border-radius:0 10px 10px 0; padding:14px 16px; margin:10px 0; font-size:13.5px; line-height:1.55; color:rgba(255,255,255,0.8); }
   .note b { color:#fff; } .note code { background:rgba(255,255,255,0.1); padding:1px 5px; border-radius:4px; font-size:12px; }
   .note.warn { border-left-color:var(--red); }
@@ -57,13 +59,14 @@
   </div>
 
   <div class="item" data-price="20535">
-    <input type="checkbox" class="chk"><div class="num">1</div>
+    <input type="checkbox" class="chk" checked><div class="num">1</div>
     <div class="info">
       <div class="cat">Процессор</div>
       <div class="name">AMD Ryzen 9 9950X</div>
       <div class="desc">16 ядер / 32 потока · встройка есть (POST без видео)</div>
     </div>
     <div class="right">
+      <span class="bought">✅ Куплено</span>
       <div class="price">от 20 535 ₴</div>
       <div class="links">
         <a class="buy" href="https://hotline.ua/ua/computer-processory/amd-ryzen-9-9950x-100-100001277wof/?sort=priceAsc" target="_blank">💰 Дешеві зверху</a>
@@ -89,13 +92,14 @@
   </div>
 
   <div class="item" data-price="8499">
-    <input type="checkbox" class="chk"><div class="num">3</div>
+    <input type="checkbox" class="chk" checked><div class="num">3</div>
     <div class="info">
       <div class="cat">Материнская плата</div>
       <div class="name">ASUS ROG STRIX B650E-F GAMING WIFI</div>
       <div class="desc">AM5 · B650E · HDMI+DP (для встройки) · 4×DDR5</div>
     </div>
     <div class="right">
+      <span class="bought">✅ Куплено</span>
       <div class="price">от 8 499 ₴</div>
       <div class="links">
         <a class="buy" href="https://hotline.ua/ua/computer-materinskie-platy/asus-rog-strix-b650e-f-gaming-wifi/?sort=priceAsc" target="_blank">💰 Дешеві зверху</a>
@@ -223,6 +227,7 @@
     document.getElementById('cnt').textContent=done;
   }
   items.forEach(function(it){ it.querySelector('.chk').addEventListener('change',recalc); });
+  recalc();
 </script>
 </body>
 </html>
