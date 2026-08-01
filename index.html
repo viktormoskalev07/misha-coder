@@ -3,335 +3,236 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🖥️ ПК под 3D-рендеринг · Corona · до 150к</title>
+<title>🛒 Закупка ПК · 3D-рендеринг · по частям</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
-  :root { --gold:#FFD700; --red:#E53935; --dark:#0D0D0D; --card:#1A1A2E; --accent:#16213E; }
+  :root { --gold:#FFD700; --cyan:#22d3ee; --green:#4ade80; --red:#f87171; --dark:#0D0D0D; --card:#1A1A2E; --accent:#16213E; }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:var(--dark); color:#fff; font-family:'Inter',sans-serif; min-height:100vh; overflow-x:hidden; }
-
-  header { text-align:center; padding:56px 20px 36px; background:linear-gradient(135deg,#001a33 0%,#0d0d0d 50%,#0a1a00 100%); position:relative; overflow:hidden; }
-  header::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 50% 50%, rgba(0,200,255,0.08) 0%, transparent 70%); }
-  .header-icon { font-size:66px; display:block; margin-bottom:14px; }
-  h1 { font-size:clamp(30px,6vw,58px); font-weight:900; background:linear-gradient(90deg,#22d3ee,#a78bfa,#22d3ee); background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:shine 3s linear infinite; letter-spacing:-1px; }
-  @keyframes shine { to { background-position:200% center; } }
-  .subtitle { margin-top:12px; font-size:18px; color:rgba(255,255,255,0.6); }
-  .nav { margin-top:18px; }
-  .nav a { color:var(--gold); text-decoration:none; font-size:14px; font-weight:600; border:1px solid rgba(255,215,0,0.3); padding:8px 16px; border-radius:20px; transition:background 0.2s; }
-  .nav a:hover { background:rgba(255,215,0,0.1); }
-
-  .wrap { padding:48px 20px; max-width:1400px; margin:0 auto; }
-
-  /* ANALYSIS BLOCK */
-  .analysis { background:var(--accent); border:1px solid rgba(34,211,238,0.2); border-radius:20px; padding:28px; margin-bottom:48px; }
-  .analysis h2 { font-size:22px; font-weight:900; margin-bottom:14px; color:#22d3ee; }
-  .analysis p { color:rgba(255,255,255,0.75); line-height:1.65; margin-bottom:12px; font-size:15px; }
-  .analysis b { color:#fff; }
-  .prio { display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 4px; }
-  .prio span { font-size:13px; font-weight:700; padding:7px 12px; border-radius:10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); }
-  .prio .p1 { color:#4ade80; border-color:rgba(74,222,128,0.4); }
-  .prio .p2 { color:#22d3ee; border-color:rgba(34,211,238,0.4); }
-  .prio .p3 { color:#fbbf24; border-color:rgba(251,191,36,0.4); }
-  .prio .p4 { color:rgba(255,255,255,0.5); }
-
-  .warn { background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.35); border-radius:16px; padding:20px 24px; margin-bottom:44px; }
-  .warn b { color:#f87171; }
-  .warn p { color:rgba(255,255,255,0.8); line-height:1.6; font-size:14px; }
-
-  .category-title { font-size:clamp(22px,4vw,32px); font-weight:900; margin-bottom:30px; display:flex; align-items:center; gap:14px; }
-  .category-title::after { content:''; flex:1; height:2px; background:linear-gradient(90deg,rgba(34,211,238,0.4),transparent); margin-left:16px; }
-  .category-title span { font-size:16px; color:rgba(255,255,255,0.4); font-weight:400; }
-
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px; margin-bottom:48px; }
-  .card { background:var(--card); border-radius:20px; overflow:hidden; border:1px solid rgba(255,255,255,0.07); transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s; position:relative; cursor:pointer; }
-  .card:hover { transform:translateY(-6px); box-shadow:0 20px 60px rgba(0,0,0,0.5); border-color:rgba(34,211,238,0.3); }
-  .ticket-number { position:absolute; top:14px; left:14px; background:linear-gradient(135deg,#22d3ee,#3b82f6); color:#001; font-weight:900; font-size:15px; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; z-index:10; box-shadow:0 4px 12px rgba(0,0,0,0.4); }
-  .part-icon { width:100%; height:150px; display:flex; align-items:center; justify-content:center; font-size:64px; background:linear-gradient(135deg,#0f0f1e 0%,#16213e 100%); }
-  .card-body { padding:20px; }
-  .badge { display:inline-block; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:10px; }
-  .b-cpu { background:rgba(74,222,128,0.18); color:#4ade80; border:1px solid rgba(74,222,128,0.35); }
-  .b-ram { background:rgba(248,113,113,0.18); color:#f87171; border:1px solid rgba(248,113,113,0.35); }
-  .b-gpu { background:rgba(167,139,250,0.18); color:#a78bfa; border:1px solid rgba(167,139,250,0.35); }
-  .b-mb  { background:rgba(34,211,238,0.18); color:#22d3ee; border:1px solid rgba(34,211,238,0.35); }
-  .b-etc { background:rgba(251,191,36,0.18); color:#fbbf24; border:1px solid rgba(251,191,36,0.35); }
-  .card-name { font-size:18px; font-weight:700; margin-bottom:8px; line-height:1.3; }
-  .card-desc { font-size:13px; color:rgba(255,255,255,0.5); margin-bottom:14px; line-height:1.5; }
-  .card-price { font-size:22px; font-weight:900; color:var(--gold); margin-bottom:16px; }
-  .card-link { display:block; text-align:center; padding:12px 20px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:12px; color:#fff; text-decoration:none; font-weight:600; font-size:14px; transition:background 0.2s,border-color 0.2s; }
-  .card-link:hover { background:rgba(34,211,238,0.12); border-color:rgba(34,211,238,0.4); color:#22d3ee; }
-
-  .total { text-align:center; background:linear-gradient(135deg,#0a2540,#12203a); border:1px solid rgba(34,211,238,0.3); border-radius:20px; padding:32px; margin-bottom:48px; }
-  .total .sum { font-size:clamp(34px,7vw,56px); font-weight:900; color:var(--gold); letter-spacing:-1px; }
-  .total .cap { font-size:15px; color:rgba(255,255,255,0.6); margin-top:8px; }
-
-  .offer { background:var(--accent); border:1px dashed rgba(34,211,238,0.4); border-radius:20px; padding:28px; text-align:center; }
-  .offer h2 { font-size:22px; font-weight:900; color:#22d3ee; margin-bottom:12px; }
-  .offer p { color:rgba(255,255,255,0.75); line-height:1.6; font-size:15px; max-width:720px; margin:0 auto 8px; }
-
-  footer { text-align:center; padding:40px 20px; color:rgba(255,255,255,0.3); font-size:13px; border-top:1px solid rgba(255,255,255,0.05); }
-  ::-webkit-scrollbar { width:6px; }
-  ::-webkit-scrollbar-track { background:#0d0d0d; }
-  ::-webkit-scrollbar-thumb { background:rgba(34,211,238,0.3); border-radius:3px; }
+  body { background:var(--dark); color:#fff; font-family:'Inter',system-ui,sans-serif; min-height:100vh; padding:0 0 60px; }
+  header { text-align:center; padding:44px 20px 28px; background:linear-gradient(135deg,#001a33,#0d0d0d 55%,#0a1a00); }
+  h1 { font-size:clamp(24px,5vw,40px); font-weight:900; background:linear-gradient(90deg,#22d3ee,#a78bfa,#22d3ee); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .sub { margin-top:10px; color:rgba(255,255,255,0.6); font-size:15px; }
+  .wrap { max-width:940px; margin:0 auto; padding:0 16px; }
+  .total-bar { position:sticky; top:0; z-index:20; background:rgba(13,13,13,0.92); backdrop-filter:blur(8px); border-bottom:1px solid rgba(255,215,0,0.2); padding:14px 16px; text-align:center; margin-bottom:24px; }
+  .total-bar b { color:var(--gold); font-size:clamp(20px,4vw,28px); font-weight:900; }
+  .total-bar span { color:rgba(255,255,255,0.55); font-size:12.5px; }
+  .item { display:flex; align-items:center; gap:14px; background:var(--card); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:16px; margin-bottom:14px; transition:.2s; }
+  .item.done { opacity:0.45; }
+  .item.done .name { text-decoration:line-through; }
+  .chk { width:26px; height:26px; flex:0 0 auto; accent-color:var(--green); cursor:pointer; }
+  .num { width:30px; height:30px; flex:0 0 auto; border-radius:50%; background:linear-gradient(135deg,#22d3ee,#3b82f6); color:#001; font-weight:900; display:flex; align-items:center; justify-content:center; font-size:14px; }
+  .info { flex:1 1 auto; min-width:0; }
+  .cat { font-size:12px; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:.5px; }
+  .name { font-size:16px; font-weight:700; margin:2px 0; }
+  .desc { font-size:12.5px; color:rgba(255,255,255,0.5); }
+  .right { flex:0 0 auto; text-align:right; display:flex; flex-direction:column; gap:6px; align-items:flex-end; }
+  .price { font-size:19px; font-weight:900; color:var(--gold); white-space:nowrap; }
+  .links { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+  .buy { display:inline-block; background:linear-gradient(135deg,#22d3ee,#3b82f6); color:#001; font-weight:800; font-size:12.5px; text-decoration:none; padding:8px 12px; border-radius:9px; white-space:nowrap; }
+  .buy:hover { filter:brightness(1.1); }
+  .buy2 { display:inline-block; background:none; border:1px solid rgba(34,211,238,0.4); color:var(--cyan); font-weight:700; font-size:12.5px; text-decoration:none; padding:8px 12px; border-radius:9px; white-space:nowrap; }
+  .buy2:hover { background:rgba(34,211,238,0.1); }
+  .buy.free { background:none; color:var(--green); border:1px solid rgba(74,222,128,0.4); }
+  .bought { display:none; font-size:11px; font-weight:800; color:var(--green); background:rgba(74,222,128,0.15); border:1px solid rgba(74,222,128,0.45); padding:3px 9px; border-radius:8px; white-space:nowrap; }
+  .item.done .bought { display:inline-block; }
+  .note { background:var(--accent); border-left:3px solid var(--cyan); border-radius:0 10px 10px 0; padding:14px 16px; margin:10px 0; font-size:13.5px; line-height:1.55; color:rgba(255,255,255,0.8); }
+  .note b { color:#fff; } .note code { background:rgba(255,255,255,0.1); padding:1px 5px; border-radius:4px; font-size:12px; }
+  .note.warn { border-left-color:var(--red); }
+  .note.ok { border-left-color:var(--green); }
+  h2 { margin:32px 0 14px; font-size:20px; font-weight:900; }
+  @media (max-width:660px){ .item{flex-wrap:wrap} .right{width:100%; align-items:stretch} .links{justify-content:flex-start} }
 </style>
 </head>
 <body>
-
 <header>
-  <span class="header-icon">🖥️</span>
-  <h1>ПК ПОД 3D-РЕНДЕРИНГ</h1>
-  <p class="subtitle">Corona Renderer · быстрое превью · бюджет до 150 000 ₴</p>
-  <div class="nav">
-    <a href="index.html" style="background:rgba(34,211,238,0.15);border-color:rgba(34,211,238,0.5);color:#22d3ee">🖥️ Сборка ПК</a>
-    <a href="gifts.html">🎁 Подарки</a>
+  <h1>🛒 Закупка ПК под 3D-рендеринг</h1>
+  <p class="sub">Ryzen 9 9950X · 128GB · своя RTX 3060 · по частям</p>
+  <div style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+    <a href="index.html" style="color:#22d3ee;text-decoration:none;font-size:14px;font-weight:700;border:1px solid rgba(34,211,238,0.5);background:rgba(34,211,238,0.15);padding:8px 16px;border-radius:20px">🛒 Закупка</a>
+    <a href="sborka.html" style="color:rgba(255,255,255,0.75);text-decoration:none;font-size:14px;font-weight:600;border:1px solid rgba(255,255,255,0.2);padding:8px 16px;border-radius:20px">🖥️ Сборка · архив</a>
+    <a href="gifts.html" style="color:var(--gold);text-decoration:none;font-size:14px;font-weight:600;border:1px solid rgba(255,215,0,0.5);background:rgba(255,215,0,0.12);padding:8px 16px;border-radius:20px">🎁 Подарки</a>
   </div>
 </header>
 
+<div class="total-bar">
+  Итого от: <b id="sumLive">135 395 ₴</b> &nbsp;<span>· куплено <span id="cnt">0</span>/7 · 2 ссылки на каждую: 💰 товар (дешёвые сверху) + 🔎 поиск-запасная</span>
+</div>
+
 <div class="wrap">
 
-  <!-- АНАЛИЗ -->
-  <div class="analysis">
-    <h2>🎯 Что важно для Corona (и почему сборка не как для игр)</h2>
-    <p><b>Corona Renderer — это CPU-рендер.</b> И финальный рендер, и интерактивное превью (Corona Interactive) считаются на процессоре. Видеокарта в рендере <b>не участвует вообще</b> — она нужна только для вьюпорта 3ds Max / Cinema 4D. Поэтому деньги идут в CPU и память, а не в дорогую GPU.</p>
-    <p><b>Corona почти линейно масштабируется по ядрам</b> — чем больше потоков, тем быстрее рендер и превью. Но для отзывчивого вьюпорта и моделинга важна ещё и высокая частота. Оптимум баланса «ядра + частота» — <b>Ryzen 9 9950X</b> (16 ядер / 32 потока, буст 5.7 ГГц).</p>
-    <p><b>Нужна ли 3D-модельеру мощная видеокарта? Нет.</b> По форумам (Autodesk, Chaos, Reddit) вывод однозначный: для Corona хватает любой RTX 3–4-летней давности. <b>Твоя RTX 3060 (12GB) — более чем достаточно</b> для вьюпорта, а RTX ещё и ускоряет OptiX-денойзер (быстрее чистое превью). Менять GPU нет смысла — освободившиеся деньги лучше в CPU/RAM.</p>
-    <div class="prio">
-      <span class="p1">1. CPU — ядра + частота</span>
-      <span class="p2">2. RAM — много и быстрой</span>
-      <span class="p3">3. NVMe SSD — ассеты/кэш</span>
-      <span class="p4">4. GPU — только вьюпорт</span>
+  <div class="note warn" style="margin-bottom:20px">
+    <b>По две ссылки на позицию:</b> <b>💰 «Дешеві зверху»</b> — страница товара, отсортирована по цене (<code>?sort=priceAsc</code>), бери верхний магазин «в наявності». <b>🔎 «Пошук»</b> — запасная: поиск на Hotline (если у конкретного товара нет предложений — выберешь аналог/другой объём). Оплата картой на сайте магазина.
+  </div>
+
+  <div class="item" data-price="20535">
+    <input type="checkbox" class="chk" checked><div class="num">1</div>
+    <div class="info">
+      <div class="cat">Процессор</div>
+      <div class="name">AMD Ryzen 9 9950X</div>
+      <div class="desc">16 ядер / 32 потока · встройка есть (POST без видео)</div>
+    </div>
+    <div class="right">
+      <span class="bought">✅ Куплено</span>
+      <div class="price">от 20 535 ₴</div>
+      <div class="links">
+        <a class="buy" href="https://hotline.ua/ua/computer-processory/amd-ryzen-9-9950x-100-100001277wof/?sort=priceAsc" target="_blank">💰 Дешеві зверху</a>
+        <a class="buy2" href="https://hotline.ua/ua/sr/?q=Ryzen%209%209950X" target="_blank">🔎 Пошук</a>
+      </div>
     </div>
   </div>
 
-  <!-- ПРЕДУПРЕЖДЕНИЕ ПРО RAM -->
-  <div class="warn">
-    <p><b>⚠️ Кризис памяти 2026.</b> Из-за AI/HBM-спроса цены на DDR5 подскочили на 130–480% (Gartner, Tom's Hardware): 32GB-кит, стоивший ~$95 летом 2025, к середине 2026 — ~$550–600. Поэтому <b>RAM сейчас — самая дорогая и волатильная часть сборки</b>. Практичный минимум под 3D — 64GB; 128GB желательно для тяжёлых сцен, но это +85–100к и вылет из бюджета. Рекомендация: <b>берём 64GB сейчас, доставляем память когда цены упадут</b> (прогноз коррекции — не раньше 2027).</p>
+  <div class="item" data-price="86206">
+    <input type="checkbox" class="chk"><div class="num">2</div>
+    <div class="info">
+      <div class="cat">Память · главный выигрыш</div>
+      <div class="name">Crucial 128GB 2×64 DDR5-5600 Pro</div>
+      <div class="desc">2 планки (не 4×32!) · low-profile · CP2K64G56C46U5</div>
+    </div>
+    <div class="right">
+      <div class="price">от 86 206 ₴</div>
+      <div class="links">
+        <a class="buy" href="https://hotline.ua/ua/computer-moduli-pamyati-dlya-pk-i-noutbukov/crucial-128-gb-2x64gb-5600-mhz-ddr5-pro-cp2k64g56c46u5/?sort=priceAsc" target="_blank">💰 Дешеві зверху</a>
+        <a class="buy2" href="https://hotline.ua/ua/sr/?q=Crucial%20128GB%202x64%20DDR5-5600" target="_blank">🔎 Пошук</a>
+      </div>
+    </div>
   </div>
 
-  <!-- RAM ТИРЫ -->
-  <div class="analysis" style="border-color:rgba(251,191,36,0.28); margin-bottom:44px">
-    <h2 style="color:#fbbf24">📈 Сколько RAM под гигантские сцены + два проекта разом</h2>
-    <p>Для тяжёлых сцен и двух открытых проектов память — узкое место. Но в кризис 2026 это и самая дорогая часть. Реальные цены Rozetka на июль 2026:</p>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:16px">
-      <div style="background:rgba(74,222,128,0.08); border:1px solid rgba(74,222,128,0.35); border-radius:14px; padding:18px">
-        <div style="font-size:20px; font-weight:900; color:#4ade80">64 GB</div>
-        <div style="font-size:22px; font-weight:900; color:var(--gold); margin:6px 0">≈ 49 000 ₴</div>
-        <div style="font-size:13px; color:rgba(255,255,255,0.6); line-height:1.5">Базовый минимум. Тяжёлые сцены потянет, но два проекта разом — впритык. Влезает в 150к.</div>
-      </div>
-      <div style="background:rgba(251,191,36,0.1); border:1px solid rgba(251,191,36,0.5); border-radius:14px; padding:18px">
-        <div style="font-size:20px; font-weight:900; color:#fbbf24">128 GB · выбрано ⭐</div>
-        <div style="font-size:22px; font-weight:900; color:var(--gold); margin:6px 0">от 93 059 ₴</div>
-        <div style="font-size:13px; color:rgba(255,255,255,0.6); line-height:1.5">Самый дешёвый — <b>2×64GB DDR5-5600</b>, и это же самый ПРАВИЛЬНЫЙ конфиг (2 модуля, не 4). Бюджет → ~155к. Версии 4×32 дороже (99–105к) и хуже по стабильности.</div>
-      </div>
-      <div style="background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.4); border-radius:14px; padding:18px">
-        <div style="font-size:20px; font-weight:900; color:#f87171">256 GB</div>
-        <div style="font-size:22px; font-weight:900; color:var(--gold); margin:6px 0">≈ 231 000 ₴</div>
-        <div style="font-size:13px; color:rgba(255,255,255,0.6); line-height:1.5">4×64GB (G.Skill, в наличии). Только память = 1.5× бюджета. На AM5 упадёт по частоте — правильнее Threadripper. Вне 150к.</div>
+  <div class="item" data-price="8499">
+    <input type="checkbox" class="chk" checked><div class="num">3</div>
+    <div class="info">
+      <div class="cat">Материнская плата</div>
+      <div class="name">ASUS ROG STRIX B650E-F GAMING WIFI</div>
+      <div class="desc">AM5 · B650E · HDMI+DP (для встройки) · 4×DDR5</div>
+    </div>
+    <div class="right">
+      <span class="bought">✅ Куплено</span>
+      <div class="price">от 8 499 ₴</div>
+      <div class="links">
+        <a class="buy" href="https://hotline.ua/ua/computer-materinskie-platy/asus-rog-strix-b650e-f-gaming-wifi/?sort=priceAsc" target="_blank">💰 Дешеві зверху</a>
+        <a class="buy2" href="https://hotline.ua/ua/sr/?q=ASUS%20ROG%20STRIX%20B650E-F" target="_blank">🔎 Пошук</a>
       </div>
     </div>
-    <p style="margin-top:16px; font-size:14px"><b>Вывод:</b> цель — <b>128GB, самый дешёвый набор 2×64GB DDR5-5600 за 93 059₴</b> → сборка ~155к (на ~5к выше лимита). <b>256GB</b> сейчас — ~281к и лучше на Threadripper; разумно только когда цены на RAM упадут (прогноз — не раньше 2027).</p>
-    <p style="margin-top:8px; font-size:14px; color:rgba(255,255,255,0.7)"><b style="color:#f87171">⚡ Про частоту — важно:</b> не гонись за 6000+ на 128GB. Почти все 128GB-наборы рейтятся на <b>5600 МГц</b> не случайно: 2×64 — это dual-rank, и контроллер AM5 на большом объёме высокую частоту часто <b>не держит → вылеты/не стартует</b> (ровно те «кейсы»). Для CPU-рендера разница 5600 vs 6000 — <b>&lt;3%</b>. Приоритет: <b>объём → стабильность → потом частота.</b> Ставь EXPO, при нестабильности спокойно снижай до стабильных — на рендере не заметишь.</p>
   </div>
 
-  <!-- КОМПОНЕНТЫ -->
-  <div class="category-title">🧩 Сборка <span>цены проверены вживую: Hotline vs Rozetka · июль 2026</span></div>
-  <div class="grid">
-
-    <div class="card" style="border-color:rgba(74,222,128,0.35)" onclick="window.open('https://hotline.ua/ua/computer-processory/amd-ryzen-9-9950x-100-100001277wof/','_blank')">
-      <div class="ticket-number">1</div>
-      <div class="part-icon">🧠</div>
-      <div class="card-body">
-        <span class="badge b-cpu">Процессор · главное</span>
-        <span class="badge" style="background:rgba(74,222,128,0.18);color:#4ade80;border:1px solid rgba(74,222,128,0.45);margin-left:6px">✅ Куплено</span>
-        <div class="card-name">AMD Ryzen 9 9950X</div>
-        <div class="card-desc">16 ядер / 32 потока, Zen 5, буст 5.7 ГГц. Сердце Corona: топ по рендеру и превью. Самый мощный Ryzen, влезающий в бюджет (выше только Threadripper — он не влезает).</div>
-        <div class="card-price">от 20 304 ₴ <span style="font-size:13px;color:#4ade80">Hotline</span></div>
-        <div class="stock stock-in" style="margin-bottom:12px">💰 На Rozetka 23 499 ₴ → экономия 3 195 ₴</div>
-        <a class="card-link" href="https://hotline.ua/ua/computer-processory/amd-ryzen-9-9950x-100-100001277wof/" target="_blank" onclick="event.stopPropagation()">Смотреть на Hotline →</a>
+  <div class="item" data-price="2582">
+    <input type="checkbox" class="chk"><div class="num">4</div>
+    <div class="info">
+      <div class="cat">Охлаждение · воздух</div>
+      <div class="name">Thermalright Phantom Spirit 120 SE</div>
+      <div class="desc">двухбашенный · 6 трубок · 154мм · держит 9950X на уровне 360-СЖО, втрое дешевле</div>
+    </div>
+    <div class="right">
+      <div class="price">от 2 582 ₴</div>
+      <div class="links">
+        <a class="buy" href="https://hotline.ua/ua/computer-kulery-i-radiatory/thermalright-phantom-spirit-120-se/?sort=priceAsc" target="_blank">💰 Дешеві зверху</a>
+        <a class="buy2" href="https://hotline.ua/ua/sr/?q=Thermalright%20Phantom%20Spirit%20120" target="_blank">🔎 Пошук</a>
       </div>
     </div>
-
-    <div class="card" onclick="window.open('https://hotline.ua/ua/computer-moduli-pamyati-dlya-pk-i-noutbukov/crucial-128-gb-2x64gb-5600-mhz-ddr5-pro-cp2k64g56c46u5/','_blank')">
-      <div class="ticket-number">2</div>
-      <div class="part-icon">🧬</div>
-      <div class="card-body">
-        <span class="badge b-ram">Память · 128GB выбрано ⭐</span>
-        <div class="card-name">Crucial 128GB DDR5-5600 (2×64) Pro</div>
-        <div class="card-desc">2×64 (не 4×32!) — лучше по стабильности; 5600 — правильная частота для 128GB, гнать выше нельзя. Дорого из-за <b style="color:#f87171">глобального дефицита DRAM 2026</b>, не наценка магазина. Дешевле Kingston FURY (99 945 ₴).</div>
-        <div class="card-price">от 86 206 ₴ <span style="font-size:13px;color:#4ade80">Hotline</span></div>
-        <div class="stock stock-in" style="margin-bottom:12px">💰 На Rozetka 93 059 ₴ → экономия 6 853 ₴</div>
-        <a class="card-link" href="https://hotline.ua/ua/computer-moduli-pamyati-dlya-pk-i-noutbukov/crucial-128-gb-2x64gb-5600-mhz-ddr5-pro-cp2k64g56c46u5/" target="_blank" onclick="event.stopPropagation()">Смотреть на Hotline →</a>
-      </div>
-    </div>
-
-    <div class="card" style="border-color:rgba(74,222,128,0.35)" onclick="window.open('https://hotline.ua/ua/computer-materinskie-platy/gigabyte-b650e-aorus-elite-x-ax-ice/','_blank')">
-      <div class="ticket-number">3</div>
-      <div class="part-icon">🔩</div>
-      <div class="card-body">
-        <span class="badge b-mb">Мат. плата</span>
-        <span class="badge" style="background:rgba(74,222,128,0.18);color:#4ade80;border:1px solid rgba(74,222,128,0.45);margin-left:6px">✅ Куплено</span>
-        <div class="card-name">Gigabyte B650E Aorus Elite X AX ICE</div>
-        <div class="card-desc">Крепкий 16-фазный VRM под 9950X в долгих all-core рендерах, PCIe 5.0, Wi-Fi, 4 слота DDR5 — держит до 192GB (наши 128 с запасом). Разумная альтернатива дорогим X670E.</div>
-        <div class="card-price">от 8 199 ₴ <span style="font-size:13px;color:#4ade80">Hotline</span></div>
-        <div class="stock stock-in" style="margin-bottom:12px">💰 На Rozetka 8 799 ₴ → экономия 600 ₴</div>
-        <a class="card-link" href="https://hotline.ua/ua/computer-materinskie-platy/gigabyte-b650e-aorus-elite-x-ax-ice/" target="_blank" onclick="event.stopPropagation()">Смотреть на Hotline →</a>
-      </div>
-    </div>
-
-    <div class="card" style="border-color:rgba(74,222,128,0.3)">
-      <div class="ticket-number">4</div>
-      <div class="part-icon">🎮</div>
-      <div class="card-body">
-        <span class="badge b-gpu">Видеокарта · уже есть</span>
-        <div class="card-name">RTX 3060 12GB — твоя</div>
-        <div class="card-desc">Оставляем! Corona рендерит на CPU, а для вьюпорта/моделинга 3060 (12GB) более чем хватает. Бонус: RTX включает OptiX AI-денойзер → быстрее чистое превью. Менять не нужно — экономия ~30 000 ₴.</div>
-        <div class="card-price" style="color:#4ade80">0 ₴ · в наличии</div>
-        <a class="card-link" style="pointer-events:none;opacity:0.5">Апгрейд не требуется ✓</a>
-      </div>
-    </div>
-
-    <div class="card" onclick="window.open('https://hotline.ua/ua/computer-diski-ssd/lexar-nm790-2-tb-lnm790x002t-rnnng/','_blank')">
-      <div class="ticket-number">5</div>
-      <div class="part-icon">💾</div>
-      <div class="card-body">
-        <span class="badge b-etc">SSD · ассеты/кэш</span>
-        <div class="card-name">Lexar NM790 2TB</div>
-        <div class="card-desc">NVMe Gen4 TLC, 2TB под ОС/ассеты/кэш Corona. Быстрее и дешевле Samsung 990 Evo (14 499₴) — высокая скорость записи для тяжёлых сцен.</div>
-        <div class="card-price">от 13 739 ₴ <span style="font-size:13px;color:#4ade80">Hotline</span></div>
-        <a class="card-link" href="https://hotline.ua/ua/computer-diski-ssd/lexar-nm790-2-tb-lnm790x002t-rnnng/" target="_blank" onclick="event.stopPropagation()">Смотреть на Hotline →</a>
-      </div>
-    </div>
-
-    <div class="card" onclick="window.open('https://hotline.ua/ua/computer-kulery-i-radiatory/thermalright-phantom-spirit-120-se/','_blank')">
-      <div class="ticket-number">6</div>
-      <div class="part-icon">❄️</div>
-      <div class="card-body">
-        <span class="badge b-etc">Охлаждение · воздух</span>
-        <div class="card-name">Thermalright Phantom Spirit 120 SE</div>
-        <div class="card-desc">Двухбашенный воздух (154 мм), 6 тепловых трубок — держит 9950X в многочасовом рендере без троттлинга, на уровне 360-СЖО. Тише и надёжнее водянки (нет помпы), и почти втрое дешевле. Лучшее соотношение цена/охлаждение.</div>
-        <div class="card-price">от 2 582 ₴ <span style="font-size:13px;color:#4ade80">Hotline</span></div>
-        <a class="card-link" href="https://hotline.ua/ua/computer-kulery-i-radiatory/thermalright-phantom-spirit-120-se/" target="_blank" onclick="event.stopPropagation()">Смотреть на Hotline →</a>
-      </div>
-    </div>
-
-    <div class="card" onclick="window.open('https://hotline.ua/ua/computer-bloki-pitaniya/asus-tuf-gaming-850w-gold-evo-90ye00sa-b0na00/','_blank')">
-      <div class="ticket-number">7</div>
-      <div class="part-icon">⚡</div>
-      <div class="card-body">
-        <span class="badge b-etc">Блок питания</span>
-        <div class="card-name">ASUS TUF Gaming 850W Gold EVO</div>
-        <div class="card-desc">80+ Gold, запас под 9950X + 3060. Компактный (<b style="color:#4ade80">150 мм</b>) — влезает в любой ATX-корпус без проблем. Экономить на БП в рабочей станции нельзя.</div>
-        <div class="card-price">6 516 ₴</div>
-        <a class="card-link" href="https://hotline.ua/ua/computer-bloki-pitaniya/asus-tuf-gaming-850w-gold-evo-90ye00sa-b0na00/" target="_blank" onclick="event.stopPropagation()">Смотреть на Hotline →</a>
-      </div>
-    </div>
-
-    <div class="card" onclick="window.open('https://hotline.ua/ua/computer-korpusa/lian-li-lancool-207-black-g99lan207rx00/','_blank')">
-      <div class="ticket-number">8</div>
-      <div class="part-icon">📦</div>
-      <div class="card-body">
-        <span class="badge b-etc">Корпус · совместимость ✓</span>
-        <div class="card-name">Lian Li Lancool 207 Black</div>
-        <div class="card-desc"><b style="color:#4ade80">Проверено:</b> один из лучших airflow-корпусов, ATX, воздушный кулер до 175 мм (наш 154 мм — с запасом), видеокарта до 390 мм. Поддерживает и СЖО 360, если позже захочешь. ⚠️ Докупи фронт-фильтр (~200–400 ₴) — из коробки его нет.</div>
-        <div class="card-price">от 4 307 ₴ <span style="font-size:13px;color:#4ade80">Hotline</span></div>
-        <a class="card-link" href="https://hotline.ua/ua/computer-korpusa/lian-li-lancool-207-black-g99lan207rx00/" target="_blank" onclick="event.stopPropagation()">Смотреть на Hotline →</a>
-      </div>
-    </div>
-
   </div>
 
-  <!-- ИТОГО -->
-  <div class="total">
-    <div style="display:flex; gap:30px; justify-content:center; flex-wrap:wrap; align-items:flex-end">
-      <div>
-        <div style="font-size:14px; color:#4ade80; font-weight:700; margin-bottom:4px">ФИНАЛ · 128GB · цены Hotline ⭐</div>
-        <div class="sum" style="font-size:clamp(34px,7vw,56px)">≈ 141 853 ₴</div>
-        <div style="font-size:16px;color:#22d3ee;font-weight:900;margin-top:6px">≈ $3 173 <span style="font-size:12px;color:rgba(255,255,255,0.5);font-weight:400">по курсу НБУ 44.70</span></div>
-        <div style="font-size:13px;color:#4ade80;font-weight:700;margin-top:4px">✅ в бюджете 150 000 ₴, запас ~8к</div>
+  <div class="item" data-price="6516">
+    <input type="checkbox" class="chk"><div class="num">5</div>
+    <div class="info">
+      <div class="cat">Блок питания</div>
+      <div class="name">ASUS TUF Gaming 850W Gold</div>
+      <div class="desc">80+ Gold · с запасом под 9950X + RTX 3060</div>
+    </div>
+    <div class="right">
+      <div class="price">от 6 516 ₴</div>
+      <div class="links">
+        <a class="buy" href="https://hotline.ua/ua/computer-bloki-pitaniya/asus-tuf-gaming-850w-gold-evo-90ye00sa-b0na00/?sort=priceAsc" target="_blank">💰 Дешеві зверху</a>
+        <a class="buy2" href="https://hotline.ua/ua/sr/?q=ASUS%20TUF%20850W%20Gold" target="_blank">🔎 Пошук 850W Gold</a>
       </div>
     </div>
-    <div class="cap">Со своей RTX 3060 (GPU докупать не нужно) и <b>128GB</b>. Против Rozetka (≈155к) экономия <b style="color:#4ade80">~13к</b> — покупка по Hotline. Состав: CPU 20 304 + RAM 86 206 + плата 8 199 + SSD 13 739 + кулер 2 582 + БП 6 516 + корпус 4 307. Живой пересчёт с курсом НБУ — в калькуляторе ниже 👇</div>
   </div>
 
-  <!-- ГДЕ ДЕШЕВЛЕ + ЗАТЫЧКА -->
-  <div class="analysis" style="border-color:rgba(167,139,250,0.3); margin-bottom:44px">
-    <h2 style="color:#a78bfa">💡 Где брать дешевле (проверено вживую) + затычка в старый ПК</h2>
-    <p>Цены сверены <b>вживую на Hotline</b> (его поиск блокирует ботов, но страницы товаров читаются). Итог — <b style="color:#4ade80">Hotline дешевле Rozetka на ~10 650 ₴</b>:</p>
-    <p>✅ <b style="color:#4ade80">CPU 9950X:</b> Hotline от <b>20 304 ₴</b> vs Rozetka 23 499 ₴ → <b>−3 195 ₴ (13.6%)</b>. Тут Розетка правда накручивает.</p>
-    <p>✅ <b style="color:#4ade80">RAM 128GB Crucial 2×64:</b> Hotline от <b>86 206 ₴</b> vs Rozetka 93 059 ₴ → <b>−6 853 ₴</b>. (Kingston FURY дороже — 99 945 ₴.)</p>
-    <p>✅ <b style="color:#4ade80">Плата B650E Aorus:</b> Hotline от <b>8 199 ₴</b> vs Rozetka 8 799 ₴ → −600 ₴.</p>
-    <p>🔴 <b style="color:#f87171">Но 128GB за 80к — уже не найти.</b> Дефицит DRAM 2026 реален: в поисковой выдаче Hotline светится старая цена ~37к, но <b>вживую это 86–100к</b> — кэш устарел. Минимум по рынку сейчас ≈86к.</p>
-    <p>🟡 <b style="color:#fbbf24">CPU — НЕ на AliExpress.</b> Дорогие процы там часто перемаркированные/поддельные + растаможка (~+30% от €150) + нет гарантии. AliExpress вообще закрыт CAPTCHA для проверки. Бери локально по Hotline.</p>
-    <p style="margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.1)">🔌 <b>Затычка в старый ПК</b> (3060 переезжает в новый): <b>сначала проверь встроенное видео</b> — если в старом Intel с iGPU или Ryzen APU (G-серия), видеовыход на плате работает и <b>GPU вообще не нужна</b>. Если нет — дешевле и быстрее <b>б/у GT 610/710/210 на OLX за ~100–250 грн ($3–6)</b>. На AliExpress «за $5» — только б/у; новая GT 710 там ~$25–35 + доставка/ожидание.</p>
-  </div>
-
-  <!-- КАЛЬКУЛЯТОР -->
-  <div class="analysis" id="calc" style="border-color:rgba(34,211,238,0.35); margin-bottom:44px">
-    <h2 style="color:#22d3ee">🧮 Калькулятор сборки · сумма + курс НБУ</h2>
-    <p style="margin-bottom:16px">Сними галочку с того, что уже есть/не берёшь — сумма и доллар пересчитаются. Курс USD тянется живьём из API Нацбанка.</p>
-    <div id="calc-rows" style="display:flex; flex-direction:column; gap:8px"></div>
-    <div style="margin-top:20px; padding-top:18px; border-top:1px solid rgba(255,255,255,0.12); display:flex; flex-wrap:wrap; gap:24px; align-items:baseline; justify-content:center">
-      <div style="text-align:center"><div style="font-size:13px;color:rgba(255,255,255,0.5)">Итого</div><div id="calc-uah" style="font-size:clamp(30px,6vw,48px);font-weight:900;color:var(--gold)">—</div></div>
-      <div style="text-align:center"><div style="font-size:13px;color:rgba(255,255,255,0.5)">В долларах</div><div id="calc-usd" style="font-size:clamp(30px,6vw,48px);font-weight:900;color:#22d3ee">—</div></div>
+  <div class="item" data-price="6750">
+    <input type="checkbox" class="chk"><div class="num">6</div>
+    <div class="info">
+      <div class="cat">Накопитель</div>
+      <div class="name">Kingston NV3 1TB (NVMe)</div>
+      <div class="desc">Gen4 NVMe TLC · SNV3S/1000G · под ОС + проект</div>
     </div>
-    <div id="calc-rate" style="text-align:center; margin-top:8px; font-size:13px; color:rgba(255,255,255,0.45)">курс загружается…</div>
+    <div class="right">
+      <div class="price">от 6 750 ₴</div>
+      <div class="links">
+        <a class="buy" href="https://hotline.ua/ua/computer-diski-ssd/kingston-nv3-1-tb-snv3s1000g/?sort=priceAsc" target="_blank">💰 Дешеві зверху</a>
+        <a class="buy2" href="https://hotline.ua/ua/sr/?q=Kingston%20NV3%201TB" target="_blank">🔎 Пошук</a>
+      </div>
+    </div>
   </div>
 
-  <!-- ПРЕДЛОЖКА -->
-  <div class="offer">
-    <h2>📥 Предложка — собираем офферы по Украине</h2>
-    <p>Видел дешевле, есть б/у или готов собрать? Кидай ссылку и цену. <b>Особенно ищем память</b> — сейчас она дороже всего, и хороший оффер на 64/128GB DDR5 экономит больше всего.</p>
-    <p>💡 <b>Проверяй цены на <a href="https://hotline.ua/ua/computer/" target="_blank" style="color:#22d3ee">Hotline.ua</a></b> — он показывает минимум по всем магазинам Украины (обычно на 5–15% дешевле одного магазина). Цены выше — референс с Rozetka.</p>
-    <p>Ищем: комплектующие в наличии, б/у 9950X / Threadripper, DDR5-киты, сборку под ключ. Города — вся Украина, самовывоз/НП.</p>
+  <div class="item" data-price="4307">
+    <input type="checkbox" class="chk"><div class="num">7</div>
+    <div class="info">
+      <div class="cat">Корпус</div>
+      <div class="name">Lian Li Lancool 207 Black</div>
+      <div class="desc">лучший airflow · кулер до 175мм · ⚠ докупить фронт-фильтр</div>
+    </div>
+    <div class="right">
+      <div class="price">от 4 307 ₴</div>
+      <div class="links">
+        <a class="buy" href="https://hotline.ua/ua/computer-korpusa/lian-li-lancool-207-black-g99lan207rx00/?sort=priceAsc" target="_blank">💰 Дешеві зверху</a>
+        <a class="buy2" href="https://hotline.ua/ua/sr/?q=Lian%20Li%20Lancool%20207" target="_blank">🔎 Пошук</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="item" data-price="0">
+    <input type="checkbox" class="chk"><div class="num">8</div>
+    <div class="info">
+      <div class="cat">Видеокарта</div>
+      <div class="name">RTX 3060 12GB — своя</div>
+      <div class="desc">докупать не нужно · для вьюпорта; POST идёт со встройки</div>
+    </div>
+    <div class="right">
+      <div class="price" style="color:var(--green)">0 ₴</div>
+      <span class="buy free">уже есть</span>
+    </div>
+  </div>
+
+  <h2>📌 Важное перед покупкой</h2>
+
+  <div class="note ok">
+    <b>Память — 2×64, не 4×32.</b> Дешевле (86к vs 98к), стабильнее на AM5, меньше греется, слоты не забиты. Главная экономия против готовой сборки. За 86к бери у топового магазина.
+  </div>
+
+  <div class="note">
+    <b>Блок питания:</b> основная ссылка — на модель TUF 850W Gold EVO (35 предложений, от 6 516). Запасная 🔎 показывает все ASUS TUF 850W Gold — если конкретной ревизии не будет, возьмёшь другую (они равноценны).
+  </div>
+
+  <div class="note">
+    <b>Кулер Thermalright Phantom Spirit 120 SE</b> — двухбашенный, 6 тепловых трубок, полноценно охлаждает 9950X в долгом рендере (на уровне 360-СЖО), тише и надёжнее водянки. В комплекте крепление AM5. В Lancool 207 влезает свободно (154 < 175 мм).
+  </div>
+
+  <div class="note">
+    <b>Процессор дешевле на OLX</b> — новый «серый» ~17 500 ₴ (−3к), гарантия от продавца. Проверь рейтинг. Безопасно — Hotline от 20,5к с офиц. гарантией.
+  </div>
+
+  <div class="note warn">
+    <b>Корпус:</b> у Lancool 207 нет фронт-фильтра из коробки — для пыльной комнаты докупи фильтр (~200-400 ₴). Вдув спереди > выдув = положительное давление.
+  </div>
+
+  <div class="note ok">
+    <b>Итог:</b> ~135 395 ₴ по частям (сумма «от») против ~150-155к готовой сборкой у luckylink. Со «серым» CPU — ~132к. Финальная цена — у выбранного магазина.
   </div>
 
 </div>
 
-<footer>
-  Цены проверены вживую на Hotline · июль 2026 · Corona = CPU-рендер, приоритет CPU+RAM · память волатильна из-за дефицита DRAM 2026
-</footer>
-
 <script>
-(function(){
-  var FALLBACK_RATE = 44.703; // НБУ на 21.07.2026
-  var parts = [
-    { n:'Ryzen 9 9950X', p:20304 },
-    { n:'Crucial 128GB DDR5-5600 (2×64)', p:86206 },
-    { n:'Gigabyte B650E Aorus Elite X', p:8199 },
-    { n:'RTX 3060 12GB (своя)', p:0 },
-    { n:'Lexar NM790 2TB', p:13739 },
-    { n:'Thermalright Phantom Spirit 120 SE', p:2582 },
-    { n:'ASUS TUF 850W Gold EVO', p:6516 },
-    { n:'Lian Li Lancool 207', p:4307 }
-  ];
-  var rate = FALLBACK_RATE, checked = parts.map(function(){ return true; });
-  var rowsEl = document.getElementById('calc-rows');
-  var uahEl = document.getElementById('calc-uah'), usdEl = document.getElementById('calc-usd'), rateEl = document.getElementById('calc-rate');
-  function fmt(n){ return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' '); }
+  var items=[...document.querySelectorAll('.item')];
+  var fmt=function(n){return n.toLocaleString('ru-RU').replace(/,/g,' ')+' ₴';};
   function recalc(){
-    var sum = 0;
-    for (var i=0;i<parts.length;i++){ if (checked[i]) sum += parts[i].p; }
-    uahEl.textContent = fmt(sum) + ' ₴';
-    usdEl.textContent = '$' + fmt(sum / rate);
+    var sum=0,done=0;
+    items.forEach(function(it){
+      var chk=it.querySelector('.chk');
+      var p=parseInt(it.dataset.price)||0;
+      if(chk.checked){it.classList.add('done');done++;}else{it.classList.remove('done');sum+=p;}
+    });
+    document.getElementById('sumLive').textContent=(done?'осталось ':'')+fmt(sum);
+    document.getElementById('cnt').textContent=done;
   }
-  parts.forEach(function(part, i){
-    var row = document.createElement('label');
-    row.style.cssText = 'display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;cursor:pointer;font-size:14px';
-    var cb = document.createElement('input');
-    cb.type = 'checkbox'; cb.checked = true; cb.style.cssText = 'width:18px;height:18px;accent-color:#22d3ee;cursor:pointer';
-    cb.addEventListener('change', function(){ checked[i] = cb.checked; row.style.opacity = cb.checked ? '1' : '0.4'; recalc(); });
-    var name = document.createElement('span'); name.textContent = part.n; name.style.flex = '1';
-    var price = document.createElement('span'); price.textContent = (part.p ? fmt(part.p)+' ₴' : '0 ₴'); price.style.cssText = 'font-weight:700;color:'+(part.p?'#FFD700':'#4ade80');
-    row.appendChild(cb); row.appendChild(name); row.appendChild(price);
-    rowsEl.appendChild(row);
-  });
+  items.forEach(function(it){ it.querySelector('.chk').addEventListener('change',recalc); });
   recalc();
-  rateEl.textContent = 'курс НБУ: ' + FALLBACK_RATE.toFixed(2) + ' ₴/$ (резервный, обновляю…)';
-  fetch('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json')
-    .then(function(r){ return r.json(); })
-    .then(function(d){ if (d && d[0] && d[0].rate){ rate = d[0].rate; rateEl.textContent = 'курс НБУ: ' + rate.toFixed(4) + ' ₴/$ · на ' + (d[0].exchangedate||''); recalc(); } })
-    .catch(function(){ rateEl.textContent = 'курс НБУ: ' + FALLBACK_RATE.toFixed(2) + ' ₴/$ (резервный — API недоступен)'; });
-})();
 </script>
-
 </body>
 </html>
