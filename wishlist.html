@@ -17,33 +17,33 @@
   .note { background:var(--accent); border-left:3px solid var(--cyan); border-radius:0 10px 10px 0; padding:14px 16px; margin:14px 0; font-size:13.5px; line-height:1.6; color:rgba(255,255,255,0.82); }
   .note b { color:#fff; }
   .note.warn { border-left-color:var(--red); }
-  .card { background:var(--card); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:18px; margin:16px 0; }
-  .card.top { border-color:rgba(34,211,238,0.4); }
-  .badges { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
-  .badge { font-size:11px; font-weight:800; padding:4px 9px; border-radius:8px; letter-spacing:.3px; }
-  .b-top { background:rgba(34,211,238,0.18); color:var(--cyan); border:1px solid rgba(34,211,238,0.4); }
-  .b-ok { background:rgba(74,222,128,0.15); color:var(--green); border:1px solid rgba(74,222,128,0.4); }
-  .b-budget { background:rgba(255,215,0,0.14); color:var(--gold); border:1px solid rgba(255,215,0,0.4); }
-  .cname { font-size:20px; font-weight:900; margin:2px 0 4px; }
-  .cdesc { font-size:13.5px; color:rgba(255,255,255,0.6); line-height:1.55; }
-  .gallery { display:flex; gap:8px; margin:14px 0; flex-wrap:wrap; }
-  .gallery img { width:calc(33.33% - 6px); aspect-ratio:1; object-fit:cover; border-radius:12px; background:#fff; }
-  .ph { width:100%; aspect-ratio:2.4; border-radius:12px; background:linear-gradient(135deg,#16213E,#0d1a2e); display:flex; align-items:center; justify-content:center; font-size:56px; margin:14px 0; }
-  .row { display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px; margin-top:8px; }
-  .price { font-size:22px; font-weight:900; color:var(--gold); }
+  .note.ok { border-left-color:var(--green); }
+  .card { background:var(--card); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:18px; margin:16px 0; display:flex; gap:16px; flex-wrap:wrap; }
+  .card.top { border-color:rgba(74,222,128,0.4); }
+  .card img.pic { width:210px; max-width:100%; aspect-ratio:1; object-fit:contain; border-radius:12px; background:#fff; flex:0 0 auto; }
+  .info { flex:1 1 260px; min-width:0; }
+  .badges { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
+  .badge { font-size:11px; font-weight:800; padding:4px 9px; border-radius:8px; }
+  .b-top { background:rgba(74,222,128,0.16); color:var(--green); border:1px solid rgba(74,222,128,0.4); }
+  .b-ok { background:rgba(34,211,238,0.16); color:var(--cyan); border:1px solid rgba(34,211,238,0.4); }
+  .b-slow { background:rgba(251,191,36,0.14); color:#fbbf24; border:1px solid rgba(251,191,36,0.4); }
+  .cname { font-size:19px; font-weight:900; margin:2px 0 4px; }
+  .cdesc { font-size:13px; color:rgba(255,255,255,0.6); line-height:1.55; }
+  .row { display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:10px; margin-top:12px; }
+  .price { font-size:21px; font-weight:900; color:var(--gold); }
   .price small { font-size:12px; color:rgba(255,255,255,0.45); font-weight:400; }
   .links { display:flex; gap:8px; flex-wrap:wrap; }
   .buy { text-decoration:none; font-weight:800; font-size:13px; padding:9px 14px; border-radius:10px; white-space:nowrap; }
   .buy1 { background:linear-gradient(135deg,#22d3ee,#3b82f6); color:#001; }
   .buy2 { background:none; border:1px solid rgba(255,255,255,0.25); color:#fff; }
-  h2 { margin:30px 0 6px; font-size:20px; font-weight:900; }
+  h2 { margin:30px 0 4px; font-size:20px; font-weight:900; }
   ul { margin:6px 0 0 18px; font-size:13.5px; color:rgba(255,255,255,0.8); line-height:1.7; }
 </style>
 </head>
 <body>
 <header>
   <h1>⭐ Вишлист — дроны для сына</h1>
-  <p class="sub">микро · камера · FPV на телефон · противоударный · до $50</p>
+  <p class="sub">микро · камера · FPV · противоударный · в наличии в Украине</p>
   <div class="nav">
     <a href="index.html" style="color:#22d3ee;border:1px solid rgba(34,211,238,0.4)">🛒 Закупка</a>
     <a href="sborka.html" style="color:rgba(255,255,255,0.75);border:1px solid rgba(255,255,255,0.2)">🖥️ Сборка · архив</a>
@@ -55,45 +55,62 @@
 <div class="wrap">
 
   <div class="note warn">
-    <b>Честно про хотелки:</b> <b>«бесшумный» — нет</b>, любой дрон жужжит (микро тише). <b>Камера</b> — базовая WiFi ~720p с задержкой, для игры «в шпионов» ок, для съёмки нет. <b>Противоударность</b> — за счёт защиты пропеллеров + лёгкого веса: отскакивает от стен, но об бетон можно расколоть.
+    <b>Честно про хотелки:</b> <b>«бесшумный» — нет</b>, любой дрон жужжит. <b>Камера</b> — базовая (480–720p, с задержкой), для игры «в шпионов» ок, для съёмки нет. <b>Противоударность</b> — за счёт защиты пропеллеров: бьётся о мебель без вреда, но об бетон можно расколоть.
+  </div>
+  <div class="note ok">
+    <b>🇺🇦 Про бюджет:</b> в Украине мини-дрон <b>с камерой</b> стартует от <b>~₴2 700</b> (это уже чуть выше $50). Дешевле ₴2000 — <b>без камеры</b>. Строго до $40 с камерой — только AliExpress, но это <b>2–4 недели</b>. Ниже — оба пути.
   </div>
 
-  <!-- ТОП -->
+  <h2>🇺🇦 В наличии в Украине · Новая Почта 1–3 дня</h2>
+
+  <!-- HELICUTE -->
   <div class="card top">
-    <div class="badges">
-      <span class="badge b-top">🚁 Топ под ребёнка</span>
-      <span class="badge b-ok">камера + FPV на телефон</span>
-      <span class="badge b-ok">полная защита пропеллеров</span>
-    </div>
-    <div class="cname">Holy Stone HS420</div>
-    <div class="cdesc">Мини (31 г), <b style="color:#4ade80">пропеллеры в защитных кольцах</b> — бьётся о мебель/стены без вреда. WiFi-камера → картинка <b>на телефон</b> (видно куда летит). Заточен под детей <b>6–10</b>. В комплекте <b>пульт с держателем телефона, 3 батареи (~21 мин) и кейс</b>.</div>
-    <div class="gallery">
-      <img src="images/drone_hs420_1.jpg" alt="Holy Stone HS420" loading="lazy">
-      <img src="images/drone_hs420_2.jpg" alt="HS420 комплект" loading="lazy">
-      <img src="images/drone_hs420_3.jpg" alt="HS420 в полёте" loading="lazy">
-    </div>
-    <div class="row">
-      <div class="price">~$40–50 <small>≈ ₴1 700–2 100 · офиц. $70, на Amazon/Ali дешевле</small></div>
-      <div class="links">
-        <a class="buy buy1" href="https://www.aliexpress.com/w/wholesale-Holy-Stone-HS420.html" target="_blank">🛒 AliExpress</a>
-        <a class="buy buy2" href="https://rozetka.com.ua/ua/search/?text=Holy%20Stone%20HS420" target="_blank">🔎 Rozetka</a>
+    <img class="pic" src="images/drone_helicute.jpg" alt="Helicute H817 RACER NANO" loading="lazy">
+    <div class="info">
+      <div class="badges"><span class="badge b-top">🇺🇦 дешевле всех с камерой</span><span class="badge b-ok">защита пропеллеров</span></div>
+      <div class="cname">Helicute H817WHDWA RACER NANO</div>
+      <div class="cdesc">Мини-«гонщик» с <b style="color:#4ade80">защитными кольцами пропеллеров</b> и камерой спереди. Запись <b>576p</b>, полёт ~8 мин, дальность 100 м. Самый дешёвый мини-дрон <b>с камерой</b>, что есть в UA. Отличный для «шпионов» и обучения.</div>
+      <div class="row">
+        <div class="price">₴2 689–3 150 <small>≈ $63 · в наличии</small></div>
+        <div class="links">
+          <a class="buy buy1" href="https://hotline.ua/ua/av-kvadrokoptery-dlya-videosemki/helicute-h817w-racer-nano/" target="_blank">💰 Дешевле (Hotline)</a>
+          <a class="buy buy2" href="https://rozetka.com.ua/ua/search/?text=Helicute%20H817%20RACER%20NANO" target="_blank">🔎 Rozetka</a>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- БЮДЖЕТ -->
+  <!-- SYMA X5UW -->
   <div class="card">
-    <div class="badges">
-      <span class="badge b-budget">💸 Самый дешёвый</span>
-      <span class="badge b-ok">до €150 — без растаможки</span>
+    <img class="pic" src="images/drone_syma_x5uw.jpg" alt="Syma X5UW" loading="lazy">
+    <div class="info">
+      <div class="badges"><span class="badge b-ok">📱 FPV на телефон (WiFi)</span><span class="badge b-ok">удержание высоты</span></div>
+      <div class="cname">Syma X5UW</div>
+      <div class="cdesc">Побольше, но с <b>WiFi-камерой → трансляцией на телефон</b> (видно куда летит в реале, не только запись). 1MP, удержание высоты, headless-режим — <b>проще для новичка</b>. Прочный, популярный. Если хочется именно «картинку на экран» — этот.</div>
+      <div class="row">
+        <div class="price">₴4 255 <small>≈ $95 · в наличии</small></div>
+        <div class="links">
+          <a class="buy buy1" href="https://hotline.ua/ua/av-kvadrokoptery-dlya-videosemki/syma-kvadrokopter-x5uw/" target="_blank">💰 Дешевле (Hotline)</a>
+          <a class="buy buy2" href="https://rozetka.com.ua/ua/search/?text=Syma%20X5UW" target="_blank">🔎 Rozetka</a>
+        </div>
+      </div>
     </div>
-    <div class="cname">Дженерик мини-дрон с камерой (AliExpress)</div>
-    <div class="cdesc">Безымянные мини-дроны с WiFi-камерой и защитой пропеллеров. То же самое по сути, но дешевле. <b style="color:#fbbf24">Проверяй рейтинг продавца и отзывы</b> (качество плавает), бери с защитой пропеллеров и 2–3 батареями в комплекте.</div>
-    <div class="ph">🚁</div>
-    <div class="row">
-      <div class="price">~$25–40 <small>≈ ₴1 100–1 700</small></div>
-      <div class="links">
-        <a class="buy buy1" href="https://www.aliexpress.com/w/wholesale-mini-drone-camera-kids-fpv.html?SortType=total_tranpro_desc" target="_blank">🛒 AliExpress (по заказам)</a>
+  </div>
+
+  <h2>💸 Дешевле, но долго · AliExpress 2–4 недели</h2>
+
+  <!-- HS420 -->
+  <div class="card">
+    <img class="pic" src="images/drone_hs420_1.jpg" alt="Holy Stone HS420" loading="lazy">
+    <div class="info">
+      <div class="badges"><span class="badge b-slow">⏳ 2–4 недели</span><span class="badge b-ok">до €150 — без растаможки</span></div>
+      <div class="cname">Holy Stone HS420</div>
+      <div class="cdesc">Тот же класс (мини, защита пропеллеров, WiFi-камера на телефон, <b>3 батареи + кейс</b>), но <b>дешевле</b> — если готов ждать доставку из Китая. В комплекте пульт с держателем телефона.</div>
+      <div class="row">
+        <div class="price">~$40 <small>≈ ₴1 700 · долгая доставка</small></div>
+        <div class="links">
+          <a class="buy buy1" href="https://www.aliexpress.com/w/wholesale-Holy-Stone-HS420.html" target="_blank">🛒 AliExpress</a>
+        </div>
       </div>
     </div>
   </div>
@@ -104,17 +121,16 @@
     <ul>
       <li>Картинка с дрона → <b>приложение на телефоне</b></li>
       <li><b>Зеркалишь экран телефона на ПК</b> (Android — scrcpy/USB, iPhone — AirPlay)</li>
-      <li>В <b>OBS</b> захватываешь это окно → стрим на <b>Twitch/YouTube</b></li>
+      <li>В <b>OBS</b> захватываешь окно → стрим на <b>Twitch/YouTube</b></li>
     </ul>
-    Дрона, который сам вещает на Twitch, за $50 нет.
   </div>
 
-  <h2>🛠 Что докупить сразу</h2>
+  <h2>🛠 Что докупить / советы</h2>
   <div class="note">
     <ul>
-      <li><b>Запасные пропеллеры</b> (копейки) — ломаются первыми</li>
-      <li><b>Доп. батарея</b> — летать x2 дольше (у HS420 уже 3 в комплекте)</li>
-      <li>Первые полёты — <b>в комнате / во дворе без ветра</b> (микро сдувает)</li>
+      <li><b>Запасные пропеллеры</b> — ломаются первыми (копейки)</li>
+      <li><b>Доп. батарея</b> — летать x2 дольше</li>
+      <li>Первые полёты — <b>в комнате / во дворе без ветра</b></li>
       <li>Защиту пропеллеров <b>не снимать</b></li>
     </ul>
   </div>
